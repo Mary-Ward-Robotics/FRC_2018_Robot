@@ -23,17 +23,17 @@ public class AutoSelector {
 
 		// Robot Position Optionsh
 		robotStartPosition = new SendableChooser<String>();
-		robotStartPosition.addObject(ROBOT_LEFT, ROBOT_LEFT);
-		robotStartPosition.addDefault(ROBOT_CENTER, ROBOT_CENTER);
+		robotStartPosition.addDefault(ROBOT_LEFT, ROBOT_LEFT);
+		robotStartPosition.addObject(ROBOT_CENTER, ROBOT_CENTER);
 		robotStartPosition.addObject(ROBOT_RIGHT, ROBOT_RIGHT);
 
 		SmartDashboard.putData("Robot Start", robotStartPosition);
 
 		// First Auto action
 		robotFirstAction = new SendableChooser<String>();
-		robotFirstAction.addDefault(SWITCH, SWITCH);
+		robotFirstAction.addObject(SWITCH, SWITCH);
 		robotFirstAction.addObject(SCALE, SCALE);
-		robotFirstAction.addObject(CROSS, CROSS);
+		robotFirstAction.addDefault(CROSS, CROSS);
 
 		SmartDashboard.putData("First Action", robotFirstAction);
 

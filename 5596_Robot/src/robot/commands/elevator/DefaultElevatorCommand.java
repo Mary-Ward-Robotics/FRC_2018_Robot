@@ -3,7 +3,6 @@ package robot.commands.elevator;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import robot.Robot;
-import robot.subsystems.ElevatorSubsystem;
 
 public class DefaultElevatorCommand extends Command {
 
@@ -15,6 +14,11 @@ public class DefaultElevatorCommand extends Command {
 	@Override
 	protected void execute() {
 
+		// Look for the test command
+		if (Robot.oi.getTestRaiseElevator()) {
+			Scheduler.getInstance().add(new TimedRaiseElevator(2.0, 0.5));
+		}
+		
 		// Read the joystick 
 		// If the joystick is pressed, then 
 		// override the elevator movement.

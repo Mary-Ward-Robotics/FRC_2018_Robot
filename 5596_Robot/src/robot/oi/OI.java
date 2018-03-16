@@ -72,7 +72,6 @@ public class OI {
 
 	private TToggle pneumaticsToggle = new TToggle(driverController, TStick.LEFT);
 	private TToggle pidToggle = new TToggle(driverController, TStick.RIGHT);
-	private TToggle rampRelease = new TToggle(operatorController, TButton.X);
 
 	private TButtonPressDetector elevatorUpButtonPress = 
 			new TButtonPressDetector(operatorController,TButton.RIGHT_BUMPER);
@@ -156,6 +155,10 @@ public class OI {
 		return 0;
 	}
 	
+	public boolean getTestRaiseElevator() {
+		return operatorController.getButton(TButton.X);
+	}
+	
 	public double getElevatorSpeed() {
 		return operatorController.getAxis(TStick.LEFT, TAxis.Y);
 	}
@@ -167,11 +170,6 @@ public class OI {
 	public boolean getElevatorDown() {
 		return elevatorDownButtonPress.get();
 	}
-	//ramp release
-	public boolean getRampRelease() {
-		return rampRelease.get();
-	}
-
 
 
 	/*
@@ -206,7 +204,6 @@ public class OI {
 	public void updatePeriodic() {
 		pneumaticsToggle.updatePeriodic();
 		pidToggle.updatePeriodic();
-		rampRelease.updatePeriodic();
 		driverRumble.updatePeriodic();
 	}
 

@@ -46,18 +46,18 @@ public class DriveDirectionCommand extends TSafeCommand {
     	double leftSpeed = speed;
     	double rightSpeed = speed;
     	
-////    	double steering = Robot.chassisSubsystem.getGyroPidSteering();
+//    	double steering = Robot.chassisSubsystem.getGyroPidSteering();
 //    	
-////    	if (steering > 0) {
+//    	if (steering > 0) {
 //    		rightSpeed = leftSpeed * (1.0 - steering);
 //    	}
 //
 //    	if (steering < 0) {
 //    		leftSpeed = rightSpeed * (1.0 + steering);
 //    	}
-//    	
-//    	Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);
-//    	
+    	
+    	Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
