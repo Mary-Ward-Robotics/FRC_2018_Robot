@@ -30,8 +30,8 @@ public class DriveDirectionCommand extends TSafeCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	
-//    	Robot.chassisSubsystem.enableGyroPid();
-//    	Robot.chassisSubsystem.setDirection(direction);
+    	Robot.chassisSubsystem.enableGyroPid();
+    	Robot.chassisSubsystem.setDirection(direction);
     	
     }
 
@@ -46,15 +46,15 @@ public class DriveDirectionCommand extends TSafeCommand {
     	double leftSpeed = speed;
     	double rightSpeed = speed;
     	
-//    	double steering = Robot.chassisSubsystem.getGyroPidSteering();
-//    	
-//    	if (steering > 0) {
-//    		rightSpeed = leftSpeed * (1.0 - steering);
-//    	}
-//
-//    	if (steering < 0) {
-//    		leftSpeed = rightSpeed * (1.0 + steering);
-//    	}
+    	double steering = Robot.chassisSubsystem.getGyroPidSteering();
+    	
+    	if (steering > 0) {
+    		rightSpeed = leftSpeed * (1.0 - steering);
+    	}
+
+    	if (steering < 0) {
+    		leftSpeed = rightSpeed * (1.0 + steering);
+    	}
     	
     	Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);
     	

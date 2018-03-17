@@ -22,7 +22,7 @@ public class TPigeonImu extends TGyro {
 
 	@Override
 	public double getAngle() {
-		return super.getAngle(gyro.getAbsoluteCompassHeading());
+		return super.getAngle(gyro.getFusedHeading());
 	}
 
 	@Override
