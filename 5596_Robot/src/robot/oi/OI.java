@@ -190,7 +190,7 @@ public class OI {
 	}
 
 	public double getIntakeTiltSpeed() {
-		return operatorController.getAxis(TStick.RIGHT, TAxis.Y);
+		return - operatorController.getAxis(TStick.RIGHT, TAxis.Y);
 	}
 
 	public boolean getTiltArmUp() {

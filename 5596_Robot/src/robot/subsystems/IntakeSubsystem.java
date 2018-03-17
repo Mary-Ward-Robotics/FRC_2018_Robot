@@ -8,6 +8,7 @@ import com.torontocodingcollective.subsystem.TSubsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import robot.RobotConst;
 import robot.RobotMap;
 import robot.commands.intake.DefaultIntakeCommand;
 
@@ -18,16 +19,19 @@ public class IntakeSubsystem extends TSubsystem {
 			TLimitSwitch.DefaultState.FALSE);
 
 	// Motor that moves the roller to suck in the cube
-	private TPwmSpeedController intakeRollerMotor = new TPwmSpeedController(TPwmSpeedControllerType.SPARK,
-			RobotMap.INTAKE_ROLLER_MOTOR_PWM_ADDRESS, true);
+	private TPwmSpeedController intakeRollerMotor = 
+			new TPwmSpeedController(TPwmSpeedControllerType.SPARK,
+			RobotMap.INTAKE_ROLLER_MOTOR_PWM_ADDRESS, RobotConst.INTAKE_ROLLER_ORIENTATION);
 	// Motor that moves the arm up and down
-	private TPwmSpeedController intakeTiltMotor = new TPwmSpeedController(TPwmSpeedControllerType.SPARK,
-			RobotMap.INTAKE_TILT_MOTOR_PWM_ADDRESS);
+	private TPwmSpeedController intakeTiltMotor = 
+			new TPwmSpeedController(TPwmSpeedControllerType.SPARK,
+			RobotMap.INTAKE_TILT_MOTOR_PWM_ADDRESS, RobotConst.INTAKE_TILT_ORIENTATION);
 
 //	private TEncoder intakeTiltEncoder = intakeTiltMotor.getEncoder();
 
 	// The intake clamp
-	private DoubleSolenoid intakeClaw = new DoubleSolenoid(RobotMap.INTAKE_CLAW_PNEUMATIC_PORT, RobotMap.INTAKE_CLAW_PNEUMATIC_PORT+1);
+	private DoubleSolenoid intakeClaw = 
+			new DoubleSolenoid(RobotMap.INTAKE_CLAW_PNEUMATIC_PORT, RobotMap.INTAKE_CLAW_PNEUMATIC_PORT+1);
 	
 	// // The motors in the claw (arm) that "sucks" in the cube
 	// private TCanSpeedController rightIntakeClawMotor = new
