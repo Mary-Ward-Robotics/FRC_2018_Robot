@@ -261,7 +261,7 @@ public class AutonomousCommand extends CommandGroup {
 
 	//universal
 	private void crossLine(){
-		addSequential(new DriveDistanceCommand(200, 0, 1.0, 3.0, false));
+		addSequential(new DriveDistanceCommand(100, 0, 0.4, 5.0, false));
 	}
 
 	//second action methods
