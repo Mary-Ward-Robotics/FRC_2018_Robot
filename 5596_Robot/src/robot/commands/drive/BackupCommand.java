@@ -10,7 +10,7 @@ public class BackupCommand extends TSafeCommand {
 	public BackupCommand(double distance) {
 		
 		this.distanceEncoderCounts =  
-				Math.abs(distance) * RobotConst.ENCODER_COUNTS_PER_INCH;
+				Math.abs(distance) * RobotConst.DRIVE_ENCODER_COUNTS_PER_INCH;
 	}
 	
 	protected void initialize() {

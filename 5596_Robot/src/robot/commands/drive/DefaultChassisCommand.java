@@ -3,8 +3,6 @@ package robot.commands.drive;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import robot.Robot;
-import robot.commands.drive.DriveDirectionCommand;
-import robot.subsystems.ChassisSubsystem;
 
 /**
  *
@@ -34,7 +32,7 @@ public class DefaultChassisCommand extends Command {
 		}
 
 		if (Robot.oi.reset()){
-//			Robot.chassisSubsystem.resetGyroAngle();
+			Robot.chassisSubsystem.resetGyroAngle();
 			Robot.chassisSubsystem.resetEncoders();
 		}
 
@@ -45,102 +43,14 @@ public class DefaultChassisCommand extends Command {
 			Robot.chassisSubsystem.disableSpeedPids();
 		}
 
-		
 		if (Robot.oi.getPov() != -1) {
 			Scheduler.getInstance().add(new RotateToAngleCommand(Robot.oi.getPov(), 0.5));
 		}
 
 
-		/*if (Robot.oi.getForwardThrust()) {
-			Scheduler.getInstance().add(new DriveDistanceCommand(50, Robot.chassisSubsystem.getGryoAngle(), 0.5, 5.0, true));
-		}
-
-		if (Robot.oi.getStartDriveDirection()) {
-			Scheduler.getInstance().add(new DriveDirectionCommand(0, .8, 10));
-		}
-		if (Robot.oi.getArcCommand() == 90){
-			Scheduler.getInstance().add(new ArcCommand(200, Robot.chassisSubsystem.getGryoAngle(), Robot.chassisSubsystem.getGryoAngle() + 90, 1));
-		}
-		if (Robot.oi.getArcCommand() == 270){
-			Scheduler.getInstance().add(new ArcCommand(200, Robot.chassisSubsystem.getGryoAngle(), Robot.chassisSubsystem.getGryoAngle() - 90, 1));
-		}*/
-
-		double speed = Robot.oi.getSpeed();		
-		double turn  = Robot.oi.getTurn();
-
-		// Reduce the scale of the speed and turn at low 
-		// values of the joystick
-		double scaledSpeed = scaleValue(speed);
-		double scaledTurn  = scaleValue(turn);
-
-		double leftSpeed = 0;
-		double rightSpeed = 0;
-
-		//straight driving
-		if (Math.abs(speed) > 0.1 && Math.abs(turn) < 0.1) {
-
-			leftSpeed = scaledSpeed;
-			rightSpeed = leftSpeed;
-		}
-
-		//straight turning
-		if (Math.abs(turn) > 0.1 && Math.abs(speed) < 0.1) {
-			leftSpeed = scaledTurn * .6;
-			rightSpeed = -scaledTurn * .6;
-		}
-
-		// Blend speed and turn
-		if ( speed > 0.1 && turn > 0.1) {
-			leftSpeed = scaledSpeed;
-			rightSpeed = scaledSpeed - (turn / 2);
-		}
-
-		if ( speed > 0.1 && turn < -0.1) {
-			leftSpeed = scaledSpeed + (turn / 2);
-			rightSpeed = scaledSpeed;
-		}
-
-		if ( speed < -0.1 && turn > 0.1) {
-			leftSpeed = scaledSpeed+ (turn /2);
-			rightSpeed = scaledSpeed ;
-		}
-
-		if ( speed < -0.1 && turn < -0.1) {
-			leftSpeed = scaledSpeed ;
-			rightSpeed = scaledSpeed - (turn / 2);
-		}
-		//System.out.println(speed);
-		//System.out.println(turn);
-
-		// automatic high gear
-		if (Robot.oi.getTurboOn()) {
-
-			//System.out.println(leftSpeed + " " + rightSpeed + " " + getEncoderSpeed()); 
-/*			if (Math.abs(Robot.chassisSubsystem.getEncoderSpeed()) >= robot.RobotConst.MAX_LOW_GEAR_SPEED * 0.4 
-				&& (   (leftSpeed >= 0 && rightSpeed >= 0) 
-					|| (leftSpeed <= 0 && rightSpeed <= 0) ) ) { */
-				Robot.chassisSubsystem.enableTurbo();
-		/*	}
-			 
-
-			if (Math.abs(Robot.chassisSubsystem.getEncoderSpeed()) <= robot.RobotConst.MAX_LOW_GEAR_SPEED * 0.2) {
-				Robot.chassisSubsystem.disableTurbo(); 
-				// System.out.println("disable turbo 1"); 
-			} 
-			if (! ((leftSpeed >= 0 && rightSpeed >= 0) 
-				|| (leftSpeed <= 0 && rightSpeed <= 0))) { 
-				Robot.chassisSubsystem.disableTurbo();
-				//System.out.println("disable turbo 3"); 
-			}*/
-
-		}
-		else {
-			Robot.chassisSubsystem.disableTurbo(); 
-		}
-
-
-		leftSpeed  = Robot.oi.getSpeed();		
-		rightSpeed = Robot.oi.getTurn();
+		// Tank drive uses the speeds directly
+		double leftSpeed  = scaleValue(Robot.oi.getLeftMotorSpeed());		
+		double rightSpeed = scaleValue(Robot.oi.getRightMotorSpeed());
 		Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);
 	}
 
@@ -153,7 +63,7 @@ public class DefaultChassisCommand extends Command {
 
 		double absValue = Math.abs(value);
 
-		if (absValue < 0.1) { 
+		if (absValue < 0.08) { 
 			return 0;
 		}
 

@@ -19,39 +19,37 @@ import com.torontocodingcollective.oi.TTrigger;
 
 /**Driver Controller
  * 	Sticks:
- * 		Right Stick X-axis 	= Drive Motor Turn 
- * 		Left Stick Y-axis  	= Drive Motor Speed
+ * 		Right Stick Y-axis 	= Drive Motor Tank Drive 
+ * 		Left Stick Y-axis  	= Drive Motor Tank Drive
  * 		Right Stick Press  	= Toggle PIDs
- * 		Left Stick Press 	= Toggle Compressor
  * 	Buttons:
  * 		Start Button 		= Reset Encoders and Gyro 
  * 		Back Button 		= Cancel any Command
  * 		X Button			= Automatic intake
- * 		Y Button			= intake Toggle
  * 		B Button			= Automatic intake cancel
  * 
  * 	Bumpers/Triggers:
+ * 		Left Bumper			= High Gear (Turbo)
+ *      Left Trigger        = Intake Claw Open
  *      Right Bumper        = Intake Cube
  *      Right Trigger       = Outtake Cube
- * 		Left Bumper			= High Gear
- *      Left Trigger        = Intake Open
  * 
  * Operator Controller
  * 	Sticks:
  * 		Left Stick Y-axis  	= Elevator Motor Speed (Manual Control)
+ * 		Right Stick Y-axis	= Intake Tilt Motor Speed (Manual Control)
  * 		Right Stick X    	= Right Ramp Rear Adjust
  * 		Right Stick Y    	= Left Ramp Rear Adjust
  * 		Right Stick Press  	= 
  * 		Left Stick Press 	= 
  * 	Buttons:
- * 		Y Button 			= Eject Cube out Front of the Robot
- * 		A Button 			= Eject Cube out Back of the Robot
+ *      A Button            = Outtake Cube
  * 		X Button			= Deploy Ramps
  * 	Bumpers/Triggers:
- * 		Right Bumper		= Move Elevator Up One Level
- * 		Left Bumper			= Move Elevator Down One Level		
- * 		Right Trigger		= Move Intake Forearms to Inner Position 
- * 		Left Trigger 		= Move Intake Forearms to Outer Position 
+ * 		Left Trigger 		= Climb Speed Up (Manual Control)
+ * 		Right Trigger		= Climb Speed down (Manual Control) 
+ * 		Left Bumper			= Move Elevator Up One Level		
+ * 		Right Bumper		= Move Elevator Down One Level
  *	POV
  *		45					= Raise Right Ramp
  *		315					= Raise Left Ramp
@@ -61,7 +59,8 @@ import com.torontocodingcollective.oi.TTrigger;
  *
  */
 public class OI {
-
+	
+	// Declare an autoSelector to put it on the Smartdashboard
 	public AutoSelector autoSelector = new AutoSelector();
 
 	private TGameController driverController = new TGameController_Xbox(0);
@@ -69,47 +68,28 @@ public class OI {
 	
 	public TRumbleManager driverRumble = new TRumbleManager("Driver", driverController);
 
-
-	private TToggle pneumaticsToggle = new TToggle(driverController, TStick.LEFT);
 	private TToggle pidToggle = new TToggle(driverController, TStick.RIGHT);
 
 	private TButtonPressDetector elevatorUpButtonPress = 
-			new TButtonPressDetector(operatorController,TButton.RIGHT_BUMPER);
-
-	private TButtonPressDetector elevatorDownButtonPress = 
 			new TButtonPressDetector(operatorController,TButton.LEFT_BUMPER);
 
-	public void init() {
-		pneumaticsToggle.set(true);
-	}
+	private TButtonPressDetector elevatorDownButtonPress = 
+			new TButtonPressDetector(operatorController,TButton.RIGHT_BUMPER);
 
-	//Driver Controller
-	public double getSpeed() {
+	//******************************************************
+	// Driver Controller
+	//******************************************************
+	public double getLeftMotorSpeed() {
 		return - driverController.getAxis(TStick.LEFT, TAxis.Y);
 	}
 
-	public double getTurn() {
+	public double getRightMotorSpeed() {
 		return - driverController.getAxis(TStick.RIGHT, TAxis.Y);
 	}
 
-	public boolean getAutomaticIntake() {
-		return driverController.getButton(TButton.X);
+	public boolean getTurboOn() {
+		return driverController.getButton(TButton.LEFT_BUMPER);
 	}
-	public boolean getAutomaticIntakeCancel() {
-		return driverController.getButton(TButton.B);
-	}
-	
-	/*public boolean getForwardThrust() {
-	//	return gameController.getButton(TButton.A);
-	//}
-
-	public boolean getStartDriveDirection() {
-		return gameController.getButton(TButton.B);
-	}
-
-	public int getArcCommand() {
-		return gameController.getPOV();
-	}*/
 
 	public boolean getCancelCommand() {
 		return driverController.getButton(TButton.BACK);
@@ -119,16 +99,20 @@ public class OI {
 		return driverController.getButton(TButton.START);
 	}
 	
+	public boolean getAutomaticIntake() {
+		return driverController.getButton(TButton.X);
+	}
+	
+	public boolean getAutomaticIntakeCancel() {
+		return driverController.getButton(TButton.B);
+	}
+	
+	public boolean getClawOpen() {
+		return driverController.getButton(TTrigger.LEFT); 
+	}
+
 	public int getPov() {
 		return driverController.getPOV();
-	}
-
-	public boolean getTurboOn() {
-		return driverController.getButton(TButton.LEFT_BUMPER);
-	}
-
-	public boolean getCompressorEnabled() {
-		return pneumaticsToggle.get();
 	}
 
 	public boolean getSpeedPidEnabled() {
@@ -139,22 +123,19 @@ public class OI {
 		pidToggle.set(state);
 	}
 
-	//Operator Controller
-	
-	public double getClimbSpeed() {
-		double upSpeed = operatorController.getTrigger(TTrigger.LEFT);
-		double downSpeed = operatorController.getTrigger(TTrigger.RIGHT);
-		
-		if (upSpeed > 0.05) {
-			return - upSpeed;
-		}
-		
-		if (downSpeed > 0.05) {
-			return downSpeed;
-		}
-		return 0;
+	public boolean getIntakeCube() {
+		return driverController.getButton(TButton.RIGHT_BUMPER); 
 	}
-	
+
+	public boolean getOuttakeCube() {
+		return driverController.getButton(TTrigger.RIGHT) || operatorController.getButton(TButton.A);
+	}
+
+
+	//******************************************************
+	// Operator Controller
+	//******************************************************
+
 	public boolean getTestRaiseElevator() {
 		return operatorController.getButton(TButton.X);
 	}
@@ -163,6 +144,25 @@ public class OI {
 		return - operatorController.getAxis(TStick.LEFT, TAxis.Y);
 	}
 
+	public double getIntakeTiltSpeed() {
+		return - operatorController.getAxis(TStick.RIGHT, TAxis.Y);
+	}
+
+	public double getClimbSpeed() {
+
+		double upSpeed = operatorController.getTrigger(TTrigger.LEFT);
+		double downSpeed = operatorController.getTrigger(TTrigger.RIGHT);
+		
+		if (upSpeed > 0.05) {
+			return upSpeed;
+		}
+		
+		if (downSpeed > 0.05) {
+			return - downSpeed;
+		}
+		return 0;
+	}
+	
 	public boolean getElevatorUp() {
 		return elevatorUpButtonPress.get();
 	}
@@ -171,27 +171,6 @@ public class OI {
 		return elevatorDownButtonPress.get();
 	}
 
-
-	/*
-	 * Intake Buttons
-	 */
-
-	public boolean getClawOpen() {
-		return driverController.getButton(TTrigger.LEFT); 
-	}
-
-	public boolean getIntakeCube() {
-		return driverController.getButton(TButton.RIGHT_BUMPER); 
-	}
-
-	public boolean getOuttakeCube() {
-		return operatorController.getButton(TButton.A)
-				|| driverController.getButton(TTrigger.RIGHT);
-	}
-
-	public double getIntakeTiltSpeed() {
-		return - operatorController.getAxis(TStick.RIGHT, TAxis.Y);
-	}
 
 	public boolean getTiltArmUp() {
 		return false; // TODO get a button
@@ -202,7 +181,6 @@ public class OI {
 	}
 
 	public void updatePeriodic() {
-		pneumaticsToggle.updatePeriodic();
 		pidToggle.updatePeriodic();
 		driverRumble.updatePeriodic();
 	}

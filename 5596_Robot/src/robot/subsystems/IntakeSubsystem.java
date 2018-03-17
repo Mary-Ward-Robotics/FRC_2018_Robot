@@ -33,23 +33,6 @@ public class IntakeSubsystem extends TSubsystem {
 	private DoubleSolenoid intakeClaw = 
 			new DoubleSolenoid(RobotMap.INTAKE_CLAW_PNEUMATIC_PORT, RobotMap.INTAKE_CLAW_PNEUMATIC_PORT+1);
 	
-	// // The motors in the claw (arm) that "sucks" in the cube
-	// private TCanSpeedController rightIntakeClawMotor = new
-	// TCanSpeedController(TCanSpeedControllerType.TALON_SRX,
-	// RobotMap.RIGHT_INTAKE_CLAW_WHEELS_CAN_ADDRESS);
-	// private TCanSpeedController leftIntakeClawMotor = new
-	// TCanSpeedController(TCanSpeedControllerType.TALON_SRX,
-	// RobotMap.LEFT_INTAKE_CLAW_WHEELS_CAN_ADDRESS);
-	//
-	// // Intake wheels used to draw in or remove a cube (the wheels inside the
-	// robot)
-	// private TCanSpeedController leftIntakeMotor = new
-	// TCanSpeedController(TCanSpeedControllerType.TALON_SRX,
-	// RobotMap.LEFT_INTAKE_RAIL_WHEELS_CAN_ADDRESS);
-	// private TCanSpeedController rightIntakeMotor = new
-	// TCanSpeedController(TCanSpeedControllerType.TALON_SRX,
-	// RobotMap.RIGHT_INTAKE_RAIL_WHEELS_CAN_ADDRESS);
-
 	@Override
 	public void init() {
 		intakeClawClose();
@@ -84,7 +67,7 @@ public class IntakeSubsystem extends TSubsystem {
 	
 	public void tiltIntakeArmDown() {
 //		if (getTiltEncoderCount() > LIFT_DOWN_ENCODER_COUNT) {
-			intakeTiltMotor.set(-0.8);
+			intakeTiltMotor.set(-0.2);
 //		}
 	}
 

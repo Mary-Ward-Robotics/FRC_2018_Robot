@@ -5,12 +5,14 @@ import com.torontocodingcollective.speedcontroller.TPwmSpeedControllerType;
 import com.torontocodingcollective.subsystem.TSubsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import robot.RobotConst;
 import robot.RobotMap;
 import robot.commands.climb.DefaultClimbCommand;
 
 public class ClimbSubsystem extends TSubsystem {
 
-	TPwmSpeedController climbMotor = new TPwmSpeedController(TPwmSpeedControllerType.SPARK, RobotMap.CLIMB_MOTOR_PWM_ADDRESS);
+	TPwmSpeedController climbMotor = new TPwmSpeedController(TPwmSpeedControllerType.SPARK, 
+			RobotMap.CLIMB_MOTOR_PWM_ADDRESS, RobotConst.CLIMB_MOTOR_ORIENTATION);
 
 	public void setSpeed(double speed) {
 		

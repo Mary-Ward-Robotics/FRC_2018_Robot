@@ -21,9 +21,9 @@ public class AccelerateDistanceCommand extends DriveDirectionCommand {
 		this.speed = speed;
 		this.distance = distance;
 		this.stopDistanceEncoderCounts = 
-				distance * RobotConst.ENCODER_COUNTS_PER_INCH - STOPPING_ENCODER_COUNTS;
+				distance * RobotConst.DRIVE_ENCODER_COUNTS_PER_INCH - STOPPING_ENCODER_COUNTS;
 		this.slowDistanceEncoderCounts = 
-				(distance-35) * RobotConst.ENCODER_COUNTS_PER_INCH - STOPPING_ENCODER_COUNTS;
+				(distance-35) * RobotConst.DRIVE_ENCODER_COUNTS_PER_INCH - STOPPING_ENCODER_COUNTS;
 	}
 	
 	protected void initialize() {
