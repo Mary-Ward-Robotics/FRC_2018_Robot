@@ -26,9 +26,6 @@ public class ChassisSubsystem extends TGryoDriveSubsystem {
 
 	private boolean turboEnabled = false;
 
-	private double leftSpeedSetpoint = 0;
-	private double rightSpeedSetpoint = 0;
-	
 	public ChassisSubsystem() {
 
 		// Uncomment this block to use CAN based speed controllers
@@ -63,85 +60,18 @@ public class ChassisSubsystem extends TGryoDriveSubsystem {
 		setDefaultCommand(new DefaultChassisCommand());
 	}
 
-	// ********************************************************************************************************************
-	// Slew rate on acceleration (takes at least 1 second to stop)
-	// ********************************************************************************************************************
-	@Override
-	public void setSpeed(double leftSpeedSetpoint, double rightSpeedSetpoint) {
-
-		this.leftSpeedSetpoint = leftSpeedSetpoint;
-		this.rightSpeedSetpoint = rightSpeedSetpoint;
-		
-		updateSpeed();
-	}
-	
-	private void updateSpeed() {
-		
-		// If the PIDs are enabled, then bypass the soft drive code
-		if (speedPidsEnabled()) {
-			super.setSpeed(leftSpeedSetpoint, rightSpeedSetpoint);
-			return;
-		}
-		
-		double leftSpeed = leftMotor.get();
-		double rightSpeed = rightMotor.get();
-		
-		if (Math.abs(leftSpeedSetpoint - leftSpeed) < .02) {
-			leftSpeed = leftSpeedSetpoint;
-		}
-		else if (Math.abs(leftSpeedSetpoint - leftSpeed) > .8) {
-			if (leftSpeedSetpoint > leftSpeed) {
-				leftSpeed += .05;
-			}
-			else {
-				leftSpeed -= .05;
-			}
-		}
-		else {
-			if (leftSpeedSetpoint > leftSpeed) {
-				leftSpeed += .03;//.02
-			}
-			else {
-				leftSpeed -= .03;
-			}
-		}
-
-		if (Math.abs(rightSpeedSetpoint - rightSpeed) < .02) {
-			rightSpeed = rightSpeedSetpoint;
-		}
-		else if (Math.abs(rightSpeedSetpoint - rightSpeed) > .8) {
-			if (rightSpeedSetpoint > rightSpeed) {
-				rightSpeed += .05;
-			}
-			else {
-				rightSpeed -= .05;
-			}
-		}
-		else {
-			if (rightSpeedSetpoint > rightSpeed) {
-				rightSpeed += .03;
-			}
-			else {
-				rightSpeed -= .03;
-			}
-		}
-		
-		super.setSpeed(leftSpeedSetpoint, rightSpeedSetpoint);
-	}
 	
 	// ********************************************************************************************************************
 	// Turbo routines
 	// ********************************************************************************************************************
 	public void enableTurbo() {
 		turboEnabled = true;
-		//System.out.println("Turbo enabled");
 		setMaxEncoderSpeed(RobotConst.MAX_HIGH_GEAR_SPEED);
 		shifter.set(Value.kReverse);
 	}
 
 	public void disableTurbo() {
 		turboEnabled = false;
-		//System.out.println("Turbo disabled");
 		setMaxEncoderSpeed(RobotConst.MAX_LOW_GEAR_SPEED);
 		shifter.set(Value.kForward);
 	}

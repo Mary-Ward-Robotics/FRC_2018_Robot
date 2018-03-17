@@ -11,7 +11,6 @@ import robot.subsystems.ChassisSubsystem;
 import robot.subsystems.ClimbSubsystem;
 import robot.subsystems.ElevatorSubsystem;
 import robot.subsystems.IntakeSubsystem;
-import robot.subsystems.PneumaticsSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,7 +22,6 @@ import robot.subsystems.PneumaticsSubsystem;
 public class Robot extends IterativeRobot {
 
 	public static final ChassisSubsystem chassisSubsystem = new ChassisSubsystem();
-	public static final PneumaticsSubsystem pneumaticsSubsystem = new PneumaticsSubsystem();
 	public static final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
 	public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 	public static final ClimbSubsystem climbSubsystem = new ClimbSubsystem();
@@ -39,12 +37,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		oi.init();
 
 		chassisSubsystem.init();
-		pneumaticsSubsystem.init();
 		elevatorSubsystem.init();
 		intakeSubsystem.init();
+		climbSubsystem.init();
 	}
 
 	/**
@@ -148,8 +145,8 @@ public class Robot extends IterativeRobot {
 	
 	private void updatePeriodic() {
 		chassisSubsystem.updatePeriodic();
-		pneumaticsSubsystem.updatePeriodic();
 		elevatorSubsystem.updatePeriodic();
 		intakeSubsystem.updatePeriodic();
+		climbSubsystem.updatePeriodic();
 	}
 }

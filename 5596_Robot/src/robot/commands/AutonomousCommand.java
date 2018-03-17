@@ -8,7 +8,7 @@ import robot.commands.drive.DriveDistanceCommand;
 import robot.commands.drive.RotateToAngleCommand;
 import robot.commands.elevator.SetElevatorHeightCommand;
 import robot.commands.intake.AutoCubeReleaseCommand;
-import robot.commands.intake.AutomaticIntakeCommand;
+import robot.commands.intake.AutoIntakeCommand;
 import robot.oi.AutoSelector;
 import robot.oi.GameData;
 
@@ -200,7 +200,7 @@ public class AutonomousCommand extends CommandGroup {
 		addParallel(new SetElevatorHeightCommand(0));
 		addSequential(new RotateToAngleCommand(150, 0.5));
 		addParallel(new DriveDistanceCommand(54, 150, 0.5, 7.0, false));
-		addSequential(new AutomaticIntakeCommand());
+		addSequential(new AutoIntakeCommand());
 
 	}
 
@@ -239,7 +239,7 @@ public class AutonomousCommand extends CommandGroup {
 		addSequential(new RotateToAngleCommand(230, 0.5));
 		addSequential(new DriveDistanceCommand(22, 230, 0.4, 7.0, false));
 		addParallel(new ArcCommand(85, 230, 180, 0.4, true));
-		addSequential(new AutomaticIntakeCommand());/**/
+		addSequential(new AutoIntakeCommand());/**/
 	}
 
 	//center start
@@ -326,14 +326,14 @@ public class AutonomousCommand extends CommandGroup {
 		addSequential(new BackupCommand(20));
 		addSequential(new SetElevatorHeightCommand(0));
 		addSequential(new RotateToAngleCommand(80, 0.5));
-		addParallel(new AutomaticIntakeCommand());
+		addParallel(new AutoIntakeCommand());
 		addSequential(new ArcCommand(60, 90, 70, 0.5, false));
 	}
 	public void rightGetPowerCube() {
 		addSequential(new BackupCommand(20));
 		addSequential(new SetElevatorHeightCommand(0));
 		addSequential(new RotateToAngleCommand(280, 0.5));
-		addParallel(new AutomaticIntakeCommand());
+		addParallel(new AutoIntakeCommand());
 		addSequential(new ArcCommand(60, 270, 290, 0.5, false));
 	}
 }

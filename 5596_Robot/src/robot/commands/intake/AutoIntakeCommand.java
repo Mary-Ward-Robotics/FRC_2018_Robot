@@ -3,15 +3,15 @@ package robot.commands.intake;
 import robot.Robot;
 import robot.commands.drive.TSafeCommand;
 
-public class AutomaticIntakeCommand extends TSafeCommand {	
+public class AutoIntakeCommand extends TSafeCommand {	
 	
-	private enum State { FORWARD, INTAKE_DELAY, REVERSE, ELEVATE, FINISH };
+	private enum State { INTAKE, INTAKE_DELAY, FINISH };
 	
-	State state = State.FORWARD;
+	State state = State.INTAKE;
 	double reverseStartTime = 0;
 	double intakeStopDelayStartTime = 0;
 
-	public AutomaticIntakeCommand() {
+	public AutoIntakeCommand() {
 		requires(Robot.intakeSubsystem);
 	}
 	
@@ -23,7 +23,7 @@ public class AutomaticIntakeCommand extends TSafeCommand {
 	protected void execute() {
 
 		switch (state) {
-		case FORWARD:
+		case INTAKE:
 			if (Robot.intakeSubsystem.isCubeDetected() || timeSinceInitialized() > 3) {
 				Robot.intakeSubsystem.intakeClawClose();
 				intakeStopDelayStartTime = timeSinceInitialized(); 
@@ -35,13 +35,6 @@ public class AutomaticIntakeCommand extends TSafeCommand {
 			if (timeSinceInitialized() > intakeStopDelayStartTime + 1) {
 				Robot.intakeSubsystem.intakeStop();
 				state = State.FINISH;
-			}
-			break;
-			
-		case REVERSE:
-			if (timeSinceInitialized() > reverseStartTime + 2.0) {
-				state = State.FORWARD;
-				Robot.intakeSubsystem.intakeCube();
 			}
 			break;
 			
