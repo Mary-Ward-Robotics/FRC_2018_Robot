@@ -160,7 +160,7 @@ public class OI {
 	}
 	
 	public double getElevatorSpeed() {
-		return operatorController.getAxis(TStick.LEFT, TAxis.Y);
+		return - operatorController.getAxis(TStick.LEFT, TAxis.Y);
 	}
 
 	public boolean getElevatorUp() {

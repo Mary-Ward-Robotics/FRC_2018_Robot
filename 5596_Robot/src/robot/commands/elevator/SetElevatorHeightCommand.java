@@ -60,7 +60,7 @@ public class SetElevatorHeightCommand extends TSafeCommand {
 //		if (Robot.elevatorSubsystem.getLevel() == setLevel) {
 //			return true;
 //		}
-		return false;
+		return true;
 	}
 	
 	protected void end() {
