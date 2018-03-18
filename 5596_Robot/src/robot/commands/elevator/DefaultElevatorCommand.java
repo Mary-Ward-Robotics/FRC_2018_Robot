@@ -16,7 +16,8 @@ public class DefaultElevatorCommand extends Command {
 
 		// Look for the test command
 		if (Robot.oi.getTestRaiseElevator()) {
-			Scheduler.getInstance().add(new TimedRaiseElevator(2.0, 0.5));
+//			Scheduler.getInstance().add(new TimedRaiseElevator(1.2, 0.8)); //switch
+			Scheduler.getInstance().add(new TimedRaiseElevatorCommand(2, 0.8)); //scale
 		}
 		
 		// Read the joystick 

@@ -7,8 +7,10 @@ import robot.commands.drive.BackupCommand;
 import robot.commands.drive.DriveDistanceCommand;
 import robot.commands.drive.RotateToAngleCommand;
 import robot.commands.elevator.SetElevatorHeightCommand;
+import robot.commands.elevator.TimedRaiseElevatorCommand;
 import robot.commands.intake.AutoCubeReleaseCommand;
 import robot.commands.intake.AutoIntakeCommand;
+import robot.commands.intake.TimedIntakeTiltCommand;
 import robot.oi.AutoSelector;
 import robot.oi.GameData;
 
@@ -217,14 +219,17 @@ public class AutonomousCommand extends CommandGroup {
 
 	//right side start
 	private void rightScaleLeft1(){
-		addParallel(new SetElevatorHeightCommand(1));
-		addSequential(new AccelerateDistanceCommand(170, 0, 1.0, 3.0, false));
-		addSequential(new ArcCommand(100, 0, 270, 0.5, false));
-		addParallel(new SetElevatorHeightCommand(5));
-		addSequential(new DriveDistanceCommand(120, 270, 1.0, 5.0, false));
-		addSequential(new ArcCommand(100, 270, 0, 0.5, true));
-		addSequential(new DriveDistanceCommand(10, 0, 0.5, 5.0, false));
-		addSequential(new AutoCubeReleaseCommand());
+		addSequential(new DriveDistanceCommand(196, 0, 0.8, 4, true));
+//		addSequential(new ArcCommand(65.47, 0,));
+		addSequential(new TimedRaiseElevatorCommand(1.2, 0.8));
+//		addParallel(new SetElevatorHeightCommand(1));
+//		addSequential(new AccelerateDistanceCommand(170, 0, 1.0, 3.0, false));
+//		addSequential(new ArcCommand(100, 0, 270, 0.5, false));
+//		addParallel(new SetElevatorHeightCommand(5));
+//		addSequential(new DriveDistanceCommand(120, 270, 1.0, 5.0, false));
+//		addSequential(new ArcCommand(100, 270, 0, 0.5, true));
+//		addSequential(new DriveDistanceCommand(10, 0, 0.5, 5.0, false));
+//		addSequential(new AutoCubeReleaseCommand());
 
 	}
 
@@ -243,25 +248,30 @@ public class AutonomousCommand extends CommandGroup {
 	}
 
 	//center start
-	private void centerSwitchLeft1(){
-		addParallel(new SetElevatorHeightCommand(2));
-		addSequential(new ArcCommand(85, 0, 310, 0.8, false));
-		addSequential(new ArcCommand(105, 310, 0, 0.8, false));
-		addSequential(new DriveDistanceCommand(20, 0, 0.8, 7.0, false));
+	private void centerSwitchLeft1() {
+//		addParallel(new SetElevatorHeightCommand(2));
+		addParallel(new TimedRaiseElevatorCommand(1.2, 0.7));
+		addSequential(new ArcCommand(85, 0, 310, 0.6, false));
+		addParallel(new TimedIntakeTiltCommand(1.4, -0.4));
+		addSequential(new ArcCommand(105, 310, 0, 0.6, false));
+//		addSequential(new DriveDistanceCommand(20, 0, 0.8, 7.0, false));
 		addSequential(new AutoCubeReleaseCommand());
 	}
 	private void centerSwitchRight1(){
-		addParallel(new SetElevatorHeightCommand(2));
+//		addParallel(new SetElevatorHeightCommand(2));
+		addParallel(new TimedRaiseElevatorCommand(1.2, 0.8));
 		addSequential(new ArcCommand(80, 0, 45,0.8, false));
 		addSequential(new DriveDistanceCommand(3, 45, 0.8, 3.0, false));
+		addParallel(new TimedIntakeTiltCommand(1.4, -0.4));
 		addSequential(new ArcCommand(110, 45, 0, 0.8, false));
-		addSequential(new DriveDistanceCommand(20, 0, 0.8, 7.0, false));
+	//	addSequential(new DriveDistanceCommand(20, 0, 0.8, 7.0, false));
 		addSequential(new AutoCubeReleaseCommand());
 	}
 
 	//universal
 	private void crossLine(){
-		addSequential(new DriveDistanceCommand(100, 0, 0.4, 5.0, false));
+		addSequential(new DriveDistanceCommand(120, 0, 0.4, 5.0, false));
+//		addParallel(new TimedIntakeTiltCommand(1.4, 0.4));
 	}
 
 	//second action methods

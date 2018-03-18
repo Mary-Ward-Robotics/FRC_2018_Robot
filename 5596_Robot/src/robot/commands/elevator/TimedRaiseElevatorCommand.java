@@ -3,11 +3,11 @@ package robot.commands.elevator;
 import robot.Robot;
 import robot.commands.drive.TSafeCommand;
 
-public class TimedRaiseElevator extends TSafeCommand {
+public class TimedRaiseElevatorCommand extends TSafeCommand {
 	
 	private double speed;
 	
-	public TimedRaiseElevator(double time, double speed) {
+	public TimedRaiseElevatorCommand(double time, double speed) {
 		super(time);
 		requires (Robot.elevatorSubsystem);
 		this.speed = speed;

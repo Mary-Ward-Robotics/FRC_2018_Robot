@@ -9,7 +9,7 @@ public class ArcCommand extends TSafeCommand {
 	private double startDirection;
 	private double endDirection;
 	private double turnangle;
-	private double rWidth = 69.69125;//cm
+	private double rWidth = 26.25;//in
 	private double rSpeed;
 	private double lSpeed;
 	private double speed;
@@ -115,7 +115,7 @@ public class ArcCommand extends TSafeCommand {
 				error += 360;
 			}
 			
-			if (Math.abs(error) <= 2) {
+			if (Math.abs(error) <= 5) {
 				return true;
 			}
 		}

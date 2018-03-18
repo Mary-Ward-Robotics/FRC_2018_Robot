@@ -3,11 +3,11 @@ package robot.commands.intake;
 import robot.Robot;
 import robot.commands.drive.TSafeCommand;
 
-public class TimedLowerIntake extends TSafeCommand {
+public class TimedIntakeTiltCommand extends TSafeCommand {
 	
 	private double speed;
 	
-	public TimedLowerIntake(double time, double speed) {
+	public TimedIntakeTiltCommand(double time, double speed) {
 		super(time);
 		requires (Robot.intakeSubsystem);
 		this.speed = speed;

@@ -48,13 +48,13 @@ public class DriveDirectionCommand extends TSafeCommand {
     	
     	double steering = Robot.chassisSubsystem.getGyroPidSteering();
     	
-    	if (steering > 0) {
-    		rightSpeed = leftSpeed * (1.0 - steering);
-    	}
-
-    	if (steering < 0) {
-    		leftSpeed = rightSpeed * (1.0 + steering);
-    	}
+//    	if (steering > 0) {
+//    		rightSpeed = leftSpeed * (1.0 - steering);
+//    	}
+//
+//    	if (steering < 0) {
+//    		leftSpeed = rightSpeed * (1.0 + steering);
+//    	}
     	
     	Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);
     	

@@ -30,7 +30,7 @@ public class ChassisSubsystem extends TGryoDriveSubsystem {
 
 		// Uncomment this block to use CAN based speed controllers
 				// Uncomment this constructor to use PWM based Speed controllers
-				super(	new TPigeonImu(RobotMap.GYRO_CAN_PORT),
+				super(	new TPigeonImu(RobotMap.GYRO_CAN_PORT, true),
 						new TPwmSpeedController(TPwmSpeedControllerType.SPARK, 
 								RobotMap.LEFT_DRIVE_MOTOR_PWM_ADDRESS,
 								RobotConst.LEFT_MOTOR_ORIENTATION), 

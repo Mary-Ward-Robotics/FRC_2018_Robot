@@ -44,12 +44,12 @@ import com.torontocodingcollective.oi.TTrigger;
  * 		Left Stick Press 	= 
  * 	Buttons:
  *      A Button            = Outtake Cube
- * 		X Button			= Deploy Ramps
+ * 		X Button			= test button
  * 	Bumpers/Triggers:
  * 		Left Trigger 		= Climb Speed Up (Manual Control)
  * 		Right Trigger		= Climb Speed down (Manual Control) 
- * 		Left Bumper			= Move Elevator Up One Level		
- * 		Right Bumper		= Move Elevator Down One Level
+ * 		Left Bumper			= 		
+ * 		Right Bumper		= 
  *	POV
  *		45					= Raise Right Ramp
  *		315					= Raise Left Ramp

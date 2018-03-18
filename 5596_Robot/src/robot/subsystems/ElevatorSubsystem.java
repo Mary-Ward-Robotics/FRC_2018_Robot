@@ -5,6 +5,7 @@ import com.torontocodingcollective.speedcontroller.TPwmSpeedControllerType;
 import com.torontocodingcollective.subsystem.TSubsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import robot.RobotConst;
 import robot.RobotMap;
 import robot.commands.elevator.DefaultElevatorCommand;
 
@@ -14,7 +15,9 @@ public class ElevatorSubsystem extends TSubsystem {
 	public static double MAX_LEVEL = 5;
 
 	
-	TPwmSpeedController elevatorMotor = new TPwmSpeedController(TPwmSpeedControllerType.SPARK, RobotMap.ELEVATOR_MOTOR_PWM_ADDRESS);
+	TPwmSpeedController elevatorMotor = 
+			new TPwmSpeedController(TPwmSpeedControllerType.SPARK, RobotMap.ELEVATOR_MOTOR_PWM_ADDRESS,
+					RobotConst.ELEVATOR_MOTOR_ORIENTATION);
 
 	public void setSpeed(double speed) {
 		

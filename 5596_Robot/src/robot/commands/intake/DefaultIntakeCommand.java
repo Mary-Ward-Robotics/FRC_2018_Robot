@@ -36,7 +36,10 @@ public class DefaultIntakeCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-
+		if (Robot.oi.getTestRaiseElevator()) {
+//			Scheduler.getInstance().add(new TimedIntakeTiltCommand(1.4 , -0.4));
+		}
+		
 		if (Robot.oi.getAutomaticIntake()) {
 			Scheduler.getInstance().add(new TeleopAutomaticIntakeCommand());
 		}
