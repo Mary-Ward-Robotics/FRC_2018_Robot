@@ -98,6 +98,22 @@ public class OI {
 	public boolean reset() {
 		return driverController.getButton(TButton.START);
 	}
+	
+	public boolean getAutomaticIntake() {
+		return driverController.getButton(TButton.X);
+	}
+	
+	public boolean getAutomaticIntakeCancel() {
+		return driverController.getButton(TButton.B);
+	}
+	
+	public boolean getClawOpen() {
+		return driverController.getButton(TTrigger.LEFT); 
+	}
+
+	public int getPov() {
+		return driverController.getPOV();
+	}
 
 	public boolean getSpeedPidEnabled() {
 		return pidToggle.get();
@@ -106,6 +122,15 @@ public class OI {
 	public void setSpeedPidToggle(boolean state) {
 		pidToggle.set(state);
 	}
+
+	public boolean getIntakeCube() {
+		return driverController.getButton(TButton.RIGHT_BUMPER); 
+	}
+
+	public boolean getOuttakeCube() {
+		return driverController.getButton(TTrigger.RIGHT) || operatorController.getButton(TButton.A);
+	}
+
 
 	//******************************************************
 	// Operator Controller
@@ -146,6 +171,7 @@ public class OI {
 		return elevatorDownButtonPress.get();
 	}
 
+
 	public boolean getTiltArmUp() {
 		return false; // TODO get a button
 	}
@@ -154,40 +180,10 @@ public class OI {
 		return false; //TODO: get a button
 	}
 
-	public boolean getIntakeCube() {
-		if(getPov() == 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public boolean getOuttakeCube() {
-		if(getPov() == 180) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public boolean getAutomaticIntake() {
-		return operatorController.getButton(TButton.X);
-	}
-	
-	public boolean getAutomaticIntakeCancel() {
-		return operatorController.getButton(TButton.B);
-	}
-	
-	public boolean getClawOpen() {
-		return operatorController.getButton(TButton.LEFT_BUMPER); 
-	}
-
-	public int getPov() {
-		return operatorController.getPOV();
-	}
 	public void updatePeriodic() {
 		pidToggle.updatePeriodic();
 		driverRumble.updatePeriodic();
 	}
+
 
 }
