@@ -1,16 +1,10 @@
 package robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import robot.commands.drive.AccelerateDistanceCommand;
-import robot.commands.drive.ArcCommand;
-import robot.commands.drive.BackupCommand;
-import robot.commands.drive.DriveDistanceCommand;
-import robot.commands.drive.RotateToAngleCommand;
-import robot.commands.elevator.SetElevatorHeightCommand;
-import robot.commands.elevator.TimedRaiseElevatorCommand;
-import robot.commands.intake.AutoCubeReleaseCommand;
-import robot.commands.intake.AutoIntakeCommand;
-import robot.commands.intake.TimedIntakeTiltCommand;
+import robot.RobotConst;
+import robot.commands.drive.*;
+import robot.commands.elevator.*;
+import robot.commands.intake.*;
 import robot.oi.AutoSelector;
 import robot.oi.GameData;
 
@@ -49,7 +43,7 @@ public class AutonomousCommand extends CommandGroup {
 		System.out.println("Scale		   : " + scale);
 
 		//overrides
-		//System.out.println("Starting Overrides");
+		System.out.println("Starting Overrides");
 
 		if (robotStartPosition.equals(ROBOT_CENTER) && !firstAction.equals(SWITCH)) {
 			firstAction = SWITCH;
@@ -63,6 +57,16 @@ public class AutonomousCommand extends CommandGroup {
 			firstAction = CROSS;
 			System.out.println("Switch is not on our side. Overriding first action to CROSS");
 		}
+		
+		//TODO Uncomment me if we don't want to always rush SCALE
+//		if (robotStartPosition.equals(ROBOT_RIGHT) && firstAction.equals(SCALE) && scale == LEFT) {
+//			firstAction = SWITCH;
+//			System.out.println("Scale is not on our side.  Overriding first action to SWTICH");
+//		}
+//		if (robotStartPosition.equals(ROBOT_LEFT) && firstAction.equals(SCALE) && scale == RIGHT){
+//			firstAction = SWITCH;
+//			System.out.println("Scale is not on our side. Overriding first action to SWITCH");
+//		}
 
 		//run the auto
 
@@ -83,23 +87,17 @@ public class AutonomousCommand extends CommandGroup {
 	private void leftAuto(char scale, char closeSwitch, String firstAction, String secondAction) {
 		//first action
 		if (firstAction.equals(SCALE)) {
-			//scale action is selected
 			if (scale == LEFT){
-				//scale is on the left side
 				leftScaleLeft1();
 			}
 			else{
-				//System.out.println("scale is on the right side");
 				leftScaleRight1();
 			}
 		}
 		else{
-			//cross action is selected
 			crossLine();
 		}
-		//System.out.println("Starting second action");
 		if (secondAction.equals(SWITCH)) {
-			//System.out.println("Switch action selected");
 			if (closeSwitch == LEFT){
 				if (scale == LEFT) {
 					leftSwitchLeft2();
@@ -124,25 +122,18 @@ public class AutonomousCommand extends CommandGroup {
 
 		//first action
 		if (firstAction.equals(SCALE)) {
-			//scale action is selected
-
 			if (scale == RIGHT){
-				//scale is on the right side
 				rightScaleRight1();
 			}
 			else{
-				//scale is on the left side
 				rightScaleLeft1();
 			}
 		}
 		else{
-			//cross action is selected
 			crossLine();
 		}
 
-		//System.out.println("Starting second action");
 		if (secondAction.equals(SWITCH)) {
-			//System.out.println("Switch action selected");
 			if (closeSwitch == RIGHT) {
 				if (firstAction.equals(SCALE)) {
 					if (scale == RIGHT) {
@@ -156,25 +147,16 @@ public class AutonomousCommand extends CommandGroup {
 				rightScaleRight2();
 			}
 		}
-		else{
-			//System.out.println("No second action");
-		}
 	}
 
 	private void centerAuto(char scale, char closeSwitch, String firstAction, String secondAction) {
-		//System.out.println("Starting first action");
-
-		//System.out.println("Switch action selected");
 		if (closeSwitch == LEFT){
-			//System.out.println("Executing left switch command");
 			centerSwitchLeft1();
 		}
 		else{
-			//System.out.println("Executing right switch command");	
 			centerSwitchRight1();
 		}
 
-		//System.out.println("Starting second action");
 		if (secondAction.equals(SCALE)) {
 			if (closeSwitch == LEFT) {
 				leftGetPowerCube();
@@ -186,171 +168,104 @@ public class AutonomousCommand extends CommandGroup {
 		}
 	}
 
-	//first action methods 
-	// pattern methods name = (Start Position*)(Destination*)(Side)(Action Number)
-	// * = mandatory name parameter
-
+	//******************************************
+	// first action methods 
+	//******************************************
+	
+	// Pattern methods name = (Start Position)(Destination)(Side)(Action Number)
 	//left side start
 
 	private void leftScaleLeft1(){
-//		addParallel(new SetElevatorHeightCommand(1));
-//		addSequential(new AccelerateDistanceCommand(190, 0, 1.0, 5.0, false));
-//		addParallel(new SetElevatorHeightCommand(5));
-//		addSequential(new ArcCommand(120, 0, 40, 0.4, true));
-//		addSequential(new AutoCubeReleaseCommand());
-//		addSequential(new BackupCommand(25));
-//		addParallel(new SetElevatorHeightCommand(0));
-//		addSequential(new RotateToAngleCommand(150, 0.5));
-//		addParallel(new DriveDistanceCommand(54, 150, 0.5, 7.0, false));
-//		addSequential(new AutoIntakeCommand());
-
 		System.out.println("scale left");
-//		addSequential(new DriveDistanceCommand(170, 0, 0.6, 7.0, true));
-//		addSequential(new DriveDistanceCommand(20, 350, 0.4, 7.0, true));
-
-		addParallel(new SetElevatorHeightCommand(1660));
-//		addSequential(new DriveDistanceCommand(30, 350, 0.2, 7.0, true));
-		
-	}
-
-	private void leftScaleRight1(){
-		addParallel(new SetElevatorHeightCommand(1));
-		addSequential(new AccelerateDistanceCommand(160, 0, 1.0, 3.0, false));
-		addSequential(new ArcCommand(100, 0, 90, 0.5, false));
-		addParallel(new SetElevatorHeightCommand(5));
-		addSequential(new DriveDistanceCommand(120, 90, 1.0, 5.0, false));
-		addSequential(new ArcCommand(100, 90, 0, 0.5, true));
-		addSequential(new DriveDistanceCommand(10, 0, 0.5, 5.0, false));
+		addSequential(new DriveDistanceCommand(170, 0, 0.6, 7.0, true));
+		System.out.println("turning right and driving forward");
+		addSequential(new DriveDistanceCommand(20, 10, 0.4, 7.0, true));
+		System.out.println("driving forward and raising elevator");
+		addParallel(new SetElevatorHeightCommand(RobotConst.ELEVATOR_SCALE_HEIGHT_COUNT));
+		addSequential(new DriveDistanceCommand(30, 10, 0.2, 7.0, true));
+		System.out.println("releasing cube");
 		addSequential(new AutoCubeReleaseCommand());
+	}
+	private void leftScaleRight1(){
+		crossLine(); //TODO Fix my auto!
 	}
 
 	//right side start
-	private void rightScaleLeft1(){
-		addSequential(new DriveDistanceCommand(196, 0, 0.8, 4, true));
-//		addSequential(new ArcCommand(65.47, 0,));
-		addSequential(new TimedRaiseElevatorCommand(1.2, 0.8));
-//		addParallel(new SetElevatorHeightCommand(1));
-//		addSequential(new AccelerateDistanceCommand(170, 0, 1.0, 3.0, false));
-//		addSequential(new ArcCommand(100, 0, 270, 0.5, false));
-//		addParallel(new SetElevatorHeightCommand(5));
-//		addSequential(new DriveDistanceCommand(120, 270, 1.0, 5.0, false));
-//		addSequential(new ArcCommand(100, 270, 0, 0.5, true));
-//		addSequential(new DriveDistanceCommand(10, 0, 0.5, 5.0, false));
-//		addSequential(new AutoCubeReleaseCommand());
-
+	private void rightScaleLeft1(){	
+		crossLine(); //TODO Fix my auto!
 	}
-
-	private void rightScaleRight1(){
-		addParallel(new SetElevatorHeightCommand(1));
-		addSequential(new AccelerateDistanceCommand(200, 0, 1.0, 5.0, false));
-		addParallel(new SetElevatorHeightCommand(5));
-		addSequential(new ArcCommand(100, 0, 320, 0.4, true));
+	private void rightScaleRight1(){	
+		System.out.println("scale right");
+		addParallel(new IntakeTiltReset());
+		addSequential(new DriveDistanceCommand(170, 0, 0.6, 7.0, true));
+		System.out.println("turning left and driving forward");
+		addSequential(new DriveDistanceCommand(20, 350, 0.4, 7.0, true));
+		System.out.println("driving forward and raising elevator");
+		addParallel(new SetElevatorHeightCommand(RobotConst.ELEVATOR_SCALE_HEIGHT_COUNT));
+		addSequential(new DriveDistanceCommand(30, 350, 0.2, 7.0, true));
+		System.out.println("releasing cube");
 		addSequential(new AutoCubeReleaseCommand());
-		addSequential(new BackupCommand(25));
-		addParallel(new SetElevatorHeightCommand(0));
-		addSequential(new RotateToAngleCommand(230, 0.5));
-		addSequential(new DriveDistanceCommand(22, 230, 0.4, 7.0, false));
-		addParallel(new ArcCommand(85, 230, 180, 0.4, true));
-		addSequential(new AutoIntakeCommand());/**/
 	}
-
+	
 	//center start
 	private void centerSwitchLeft1() {
 //		addParallel(new SetElevatorHeightCommand(2));
-		addParallel(new TimedRaiseElevatorCommand(1.2, 0.7));
-		addSequential(new ArcCommand(85, 0, 310, 0.6, false));
-		addParallel(new TimedIntakeTiltCommand(1.4, -0.4));
-		addSequential(new ArcCommand(105, 310, 0, 0.6, false));
+//		addParallel(new TimedRaiseElevatorCommand(1.2, 0.7));
+//		addSequential(new ArcCommand(85, 0, 310, 0.6, false));
+//		addParallel(new TimedIntakeTiltCommand(1.4, -0.4));
+//		addSequential(new ArcCommand(105, 310, 0, 0.6, false));
 //		addSequential(new DriveDistanceCommand(20, 0, 0.8, 7.0, false));
-		addSequential(new AutoCubeReleaseCommand());
+//		addSequential(new AutoCubeReleaseCommand());
+		crossLine(); //TODO Fix my auto!
 	}
 	private void centerSwitchRight1(){
 //		addParallel(new SetElevatorHeightCommand(2));
-		addParallel(new TimedRaiseElevatorCommand(1.2, 0.8));
-		addSequential(new ArcCommand(80, 0, 45,0.8, false));
-		addSequential(new DriveDistanceCommand(3, 45, 0.8, 3.0, false));
-		addParallel(new TimedIntakeTiltCommand(1.4, -0.4));
-		addSequential(new ArcCommand(110, 45, 0, 0.8, false));
-	//	addSequential(new DriveDistanceCommand(20, 0, 0.8, 7.0, false));
-		addSequential(new AutoCubeReleaseCommand());
+//		addParallel(new TimedRaiseElevatorCommand(1.2, 0.8));
+//		addSequential(new ArcCommand(80, 0, 45,0.8, false));
+//		addSequential(new DriveDistanceCommand(3, 45, 0.8, 3.0, false));
+//		addParallel(new TimedIntakeTiltCommand(1.4, -0.4));
+//		addSequential(new ArcCommand(110, 45, 0, 0.8, false));
+//		addSequential(new DriveDistanceCommand(20, 0, 0.8, 7.0, false));
+//		addSequential(new AutoCubeReleaseCommand());
+		crossLine(); //TODO Fix my auto!
 	}
 
 	//universal
 	private void crossLine(){
-		addSequential(new DriveDistanceCommand(120, 0, 0.4, 5.0, false));
-//		addParallel(new TimedIntakeTiltCommand(1.4, 0.4));
+		System.out.println("Crossing baseline");
+		addSequential(new DriveDistanceCommand(120, 0, 0.4, 5.0, true));
 	}
 
-	//second action methods
+	//******************************************
+	// Second action methods 
+	//******************************************
+	
 	// pattern methods name = (Side going into second action*)(Destination*)(Side)(Action Number)
 	// * = mandatory name parameter
 
 	//left side
 	public void leftSwitchRight2(){
-		addSequential(new ArcCommand(100, 0, 80, 1.0, false));
-		addSequential(new DriveDistanceCommand(180, 80, 1.0, 5.0, false));
-		addSequential(new ArcCommand(100, 0, 170, 1.0, true));
-		addSequential(new AutoCubeReleaseCommand());
 	}
 	public void leftSwitchLeft2(){
-		addSequential(new SetElevatorHeightCommand(2));
-		addSequential(new DriveDistanceCommand(10, 150, 0.3, 7.0, false));
-		addSequential(new AutoCubeReleaseCommand());
 	}
 	public void leftScaleRight2(){
-		addSequential(new ArcCommand(100, 0, 80, 1.0, false));
-		addSequential(new DriveDistanceCommand(180, 80, 1.0, 5.0, false));
-		addParallel(new SetElevatorHeightCommand(5));
-		addSequential(new ArcCommand(100, 80, 10, 1.0, true));
-		addSequential(new AutoCubeReleaseCommand());
 	}
 	public void leftScaleLeft2(){
-		addParallel(new SetElevatorHeightCommand(5));
-		addSequential(new RotateToAngleCommand(0, 0.5));
-		addSequential(new DriveDistanceCommand(50, 0, 0.5, 5.0, false));
-		addSequential(new AutoCubeReleaseCommand());
 	}
 
 	//right side
 	public void rightSwitchRight2(){
-		addSequential(new SetElevatorHeightCommand(2));
-		addSequential(new RotateToAngleCommand(200, 0.5));
-		addSequential(new DriveDistanceCommand(10, 200, 0.3, 7.0, false));
-		addSequential(new AutoCubeReleaseCommand());
 	}
 	public void rightSwitchLeft2(){
-		addSequential(new ArcCommand(100, 0, 280, 1.0, false));
-		addSequential(new DriveDistanceCommand(180, 80, 1.0, 5.0, false));
-		addSequential(new ArcCommand(100, 0, 190, 1.0, true));
-		addSequential(new AutoCubeReleaseCommand());
 	}
 	public void rightScaleRight2(){	
-		addSequential(new RotateToAngleCommand(45, 0.5));
-		addSequential(new SetElevatorHeightCommand(5));
-		addSequential(new ArcCommand(150, 45, 350, 0.4, true));
-		addSequential(new AutoCubeReleaseCommand());
 	}
 	public void rightScaleLeft2(){
-
-		addSequential(new ArcCommand(100, 0, 280, 1.0, false));
-		addSequential(new DriveDistanceCommand(180, 280, 1.0, 5.0, false));
-		addParallel(new SetElevatorHeightCommand(5));
-		addSequential(new ArcCommand(100, 280, 350, 1.0, true));
 	}
 
 	//Center
 	public void leftGetPowerCube() {
-		addSequential(new BackupCommand(20));
-		addSequential(new SetElevatorHeightCommand(0));
-		addSequential(new RotateToAngleCommand(80, 0.5));
-		addParallel(new AutoIntakeCommand());
-		addSequential(new ArcCommand(60, 90, 70, 0.5, false));
 	}
 	public void rightGetPowerCube() {
-		addSequential(new BackupCommand(20));
-		addSequential(new SetElevatorHeightCommand(0));
-		addSequential(new RotateToAngleCommand(280, 0.5));
-		addParallel(new AutoIntakeCommand());
-		addSequential(new ArcCommand(60, 270, 290, 0.5, false));
 	}
 }

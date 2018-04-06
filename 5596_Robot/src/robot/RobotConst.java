@@ -33,12 +33,18 @@ public class RobotConst {
 
 	public static final boolean INTAKE_ROLLER_ORIENTATION;
 	public static final boolean INTAKE_TILT_ORIENTATION;
+	public static final double  INTAKE_TILT_UP_ENCODER_COUNT;
+	public static final double  INTAKE_TILT_DOWN_ENCODER_COUNT;
 
 	public static final boolean ELEVATOR_MOTOR_ORIENTATION;
 	public static final boolean ELEVATOR_ENCODER_ORIENTATION;
 	public static final double  ELEVATOR_ENCODER_COUNTS_PER_INCH;
+	public static final double  ELEVATOR_MAX_HEIGHT_COUNT;
+	public static final double  ELEVATOR_SCALE_HEIGHT_COUNT;
+	public static final double  ELEVATOR_SWITCH_HEIGHT_COUNT;
 	
 	public static final boolean CLIMB_MOTOR_ORIENTATION;
+	public static final double  CLIMB_MAX_HEIGHT_COUNT;
 
 	
 	//*********************************************************
@@ -73,13 +79,18 @@ public class RobotConst {
 			
 			INTAKE_ROLLER_ORIENTATION = INVERTED;
 			INTAKE_TILT_ORIENTATION = INVERTED;
+			INTAKE_TILT_UP_ENCODER_COUNT = 126.5625; //TODO rough estimate, check value on TallBoi before running code!
+			INTAKE_TILT_DOWN_ENCODER_COUNT = 0; //Code should automatically set the min to 0 encoder counts
 
 			ELEVATOR_MOTOR_ORIENTATION = INVERTED;
 			ELEVATOR_ENCODER_ORIENTATION = INVERTED;
 			ELEVATOR_ENCODER_COUNTS_PER_INCH = 186.67;
+			ELEVATOR_MAX_HEIGHT_COUNT = 1660; //TODO get actual max height
+			ELEVATOR_SCALE_HEIGHT_COUNT = 1660;
+			ELEVATOR_SWITCH_HEIGHT_COUNT = 575;
 			
 			CLIMB_MOTOR_ORIENTATION = INVERTED;
-			
+			CLIMB_MAX_HEIGHT_COUNT = 1660; //TODO get actual max height
 			break;
 			
 		default:
@@ -100,12 +111,18 @@ public class RobotConst {
 			
 			INTAKE_ROLLER_ORIENTATION = INVERTED;
 			INTAKE_TILT_ORIENTATION = INVERTED;
+			INTAKE_TILT_UP_ENCODER_COUNT = 126.5625; //TODO rough estimate, check value on TallBoi before running code!
+			INTAKE_TILT_DOWN_ENCODER_COUNT = 0; //Code should automatically set the min to 0 encoder counts
 
 			ELEVATOR_MOTOR_ORIENTATION = INVERTED;
 			ELEVATOR_ENCODER_ORIENTATION = INVERTED;
 			ELEVATOR_ENCODER_COUNTS_PER_INCH = 186.67;
+			ELEVATOR_MAX_HEIGHT_COUNT = 1660;
+			ELEVATOR_SCALE_HEIGHT_COUNT = 1660;
+			ELEVATOR_SWITCH_HEIGHT_COUNT = 575;
 			
 			CLIMB_MOTOR_ORIENTATION = INVERTED;
+			CLIMB_MAX_HEIGHT_COUNT = 1660; //TODO get actual max height
 			break;
 		}
 	}
