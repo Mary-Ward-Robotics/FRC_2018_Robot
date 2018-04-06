@@ -18,7 +18,7 @@ public class DriveDistanceCommand extends DriveDirectionCommand {
 		this.distance = distance;
 		this.stopDistanceEncoderCounts = 
 				distance * RobotConst.DRIVE_ENCODER_COUNTS_PER_INCH - STOPPING_ENCODER_COUNTS;
-		//System.out.println(stopDistanceEncoderCounts);
+		System.out.println(stopDistanceEncoderCounts);
 	}
 	
 	protected void initialize() {
@@ -34,7 +34,7 @@ public class DriveDistanceCommand extends DriveDirectionCommand {
 		}
 	
 		if (Robot.chassisSubsystem.getEncoderDistance() > stopDistanceEncoderCounts) {
-			//System.out.println("ending drive");
+			System.out.println("ending drive");
 			return true;
 		}
 		

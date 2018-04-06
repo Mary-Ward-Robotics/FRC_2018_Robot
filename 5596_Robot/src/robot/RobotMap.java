@@ -7,8 +7,6 @@ package robot;
  * floating around.
  */
 public class RobotMap {
-
-
 	//******************************************
 	// Speed Controllers (CAN addresses)
 	//******************************************
@@ -29,10 +27,25 @@ public class RobotMap {
 	//******************************************
 	// DIO Ports
 	//******************************************
+	
+	//Encoders always use consecutive ports
+	//ex. right drive encoder goes to 2 AND 3
 	public static int LEFT_ENCODER_DIO_PORT             = 0;
 	public static int RIGHT_ENCODER_DIO_PORT            = 2;
+	public static int LIFT_ENCODER_DIO_PORT             = 6;
+	public static int CLIMB_ENCODER_DIO_PORT            = 4;
+	public static int INTAKE_TILT_ENCODER_DIO_PORT      = 8;
 
-	public static int CUBE_DETECT_DIO_PORT              = 8;
+	public static int CLIMB_UP_LIMIT                    = 10;
+	public static int ELEVATOR_UP_LIMIT                 = 11;
+	public static int ELEVATOR_DOWN_LIMIT               = 12;
+	public static int INTAKE_TILT_UP_LIMIT              = 13;
+	public static int INTAKE_TILT_DOWN_LIMIT            = 14;
+	public static int CUBE_DETECT_DIO_PORT              = 15; 
+	
+	//******************************************
+	// Analog Ports
+	//******************************************
 	
 	//******************************************
 	// Pneumatics Ports

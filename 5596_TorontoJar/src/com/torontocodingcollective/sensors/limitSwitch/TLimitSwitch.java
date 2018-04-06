@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class TLimitSwitch {
 
 	public enum DefaultState {
-		TRUE, FALSE
+		CLOSED, OPEN
 	}
 
 	private final boolean defaultState;
@@ -13,7 +13,7 @@ public class TLimitSwitch {
 	public final DigitalInput limitSwitch;
 
 	public TLimitSwitch(int port, DefaultState defaultState) {
-		this.defaultState = defaultState == DefaultState.TRUE ? true : false;
+		this.defaultState = defaultState == DefaultState.CLOSED ? true : false;
 		limitSwitch = new DigitalInput(port);
 	}
 

@@ -2,7 +2,7 @@ package com.torontocodingcollective.sensors.encoder;
 
 import edu.wpi.first.wpilibj.Encoder;
 
-public class TDioEncoder extends TEncoder {
+public class TDioEncoder extends TEncoder{
 
 	Encoder encoder;
 	
@@ -41,5 +41,4 @@ public class TDioEncoder extends TEncoder {
 	public double getRate() {
 		return super.getRate(encoder.getRate());
 	}
-
 }

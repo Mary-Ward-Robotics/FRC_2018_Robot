@@ -1,5 +1,7 @@
 package robot.subsystems;
 
+import com.torontocodingcollective.sensors.encoder.TDioEncoder;
+import com.torontocodingcollective.sensors.limitSwitch.TLimitSwitch;
 import com.torontocodingcollective.speedcontroller.TPwmSpeedController;
 import com.torontocodingcollective.speedcontroller.TPwmSpeedControllerType;
 import com.torontocodingcollective.subsystem.TSubsystem;
@@ -10,17 +12,32 @@ import robot.RobotMap;
 import robot.commands.climb.DefaultClimbCommand;
 
 public class ClimbSubsystem extends TSubsystem {
+	
+	TLimitSwitch upperLimitSwitch = new TLimitSwitch(
+			RobotMap.CLIMB_UP_LIMIT,
+			TLimitSwitch.DefaultState.OPEN);
 
-	TPwmSpeedController climbMotor = new TPwmSpeedController(TPwmSpeedControllerType.SPARK, 
-			RobotMap.CLIMB_MOTOR_PWM_ADDRESS, RobotConst.CLIMB_MOTOR_ORIENTATION);
+	TPwmSpeedController climbMotor = new TPwmSpeedController(
+			TPwmSpeedControllerType.SPARK, 
+			RobotMap.CLIMB_MOTOR_PWM_ADDRESS,
+			RobotConst.CLIMB_MOTOR_ORIENTATION);
 
+	TDioEncoder climbEncoder =new TDioEncoder(
+			RobotMap.CLIMB_ENCODER_DIO_PORT,
+			RobotMap.CLIMB_ENCODER_DIO_PORT+1);
+	
+	
 	public void setSpeed(double speed) {
-		
-		// If the elevator is at the top and the
-		// speed is positive, then set the speed
-		// to zero.
 		climbMotor.set(speed);
 	} 
+	
+	public double getClimbEncoderCount() {
+		return climbEncoder.get();
+	}
+	
+	public boolean upperLimitReached() {
+		return upperLimitSwitch.atLimit();
+	}
 
 	@Override
 	public void init() {
@@ -37,6 +54,7 @@ public class ClimbSubsystem extends TSubsystem {
 
 		// TODO Auto-generated method stub
 		SmartDashboard.putNumber("Climb Motor", climbMotor.get());
+		SmartDashboard.putNumber("Climb Encoder", climbEncoder.get());
 	}
 
 }

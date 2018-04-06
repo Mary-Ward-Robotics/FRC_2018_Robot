@@ -6,45 +6,27 @@ import robot.subsystems.ElevatorSubsystem;
 
 public class SetElevatorHeightCommand extends TSafeCommand {
 	
-	private double setLevel;
+	private double encoderHeight;
+	boolean lift = true;
 	
-	public SetElevatorHeightCommand(double setLevel) {
+	public SetElevatorHeightCommand(double encoderHeight) {
 		super(0);
 		requires (Robot.elevatorSubsystem);
-		this.setLevel = setLevel;
+		this.encoderHeight = encoderHeight;
 	}
 	
 	public void initialize() {
+		
+		double currentHeight = Robot.elevatorSubsystem.getEncoderCount();
+		if(currentHeight < encoderHeight) {
+			Robot.elevatorSubsystem.setSpeed(0.7);
+		} else {
+			Robot.elevatorSubsystem.setSpeed(-0.3);
+			lift = false;
+		}
 	}
 	
 	protected void execute() {
-	
-		// In Teleop you can adjust the setpoint within this command
-		
-		// Increment and decrement.
-		if (Robot.oi.getElevatorUp()) {
-			setLevel++;
-			if (setLevel > ElevatorSubsystem.MAX_LEVEL) {
-				setLevel = ElevatorSubsystem.MAX_LEVEL;
-			}
-		}
-
-		if (Robot.oi.getElevatorDown()) {
-			setLevel--;
-			if (setLevel < ElevatorSubsystem.MIN_LEVEL) {
-				setLevel = ElevatorSubsystem.MIN_LEVEL;
-			}
-			if (setLevel == ElevatorSubsystem.MIN_LEVEL /* &&  !Robot.intakeSubsystem.isIntakeExtended() */) {
-				setLevel = ElevatorSubsystem.MIN_LEVEL +1;
-			}
-		}
-
-//		if (Robot.elevatorSubsystem.getLevel() > setLevel) {
-//			Robot.elevatorSubsystem.setSpeed(-1.0);
-//		}
-//		if (Robot.elevatorSubsystem.getLevel() < setLevel) {
-//			Robot.elevatorSubsystem.setSpeed(1.0);
-//		}
 	}
 	
 	protected boolean isFinished() {
@@ -53,14 +35,20 @@ public class SetElevatorHeightCommand extends TSafeCommand {
 			return true;
 		}
 		
-		if (Math.abs(Robot.oi.getElevatorSpeed()) > 0.1) {
-			return true;
+		double currentHeight = Robot.elevatorSubsystem.getEncoderCount();
+
+		if (lift) {
+			if (currentHeight > encoderHeight) {
+				return true;
+			}
+		}
+		else {
+			if (currentHeight < encoderHeight) {
+				return true;
+			}
 		}
 		
-//		if (Robot.elevatorSubsystem.getLevel() == setLevel) {
-//			return true;
-//		}
-		return true;
+		return false;
 	}
 	
 	protected void end() {

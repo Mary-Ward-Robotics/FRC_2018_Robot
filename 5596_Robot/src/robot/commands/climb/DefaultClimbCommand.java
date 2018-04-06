@@ -2,6 +2,7 @@ package robot.commands.climb;
 
 import edu.wpi.first.wpilibj.command.Command;
 import robot.Robot;
+import robot.RobotConst;
 
 public class DefaultClimbCommand extends Command {
 
@@ -13,26 +14,23 @@ public class DefaultClimbCommand extends Command {
 	@Override
 	protected void execute() {
 
-		// Read the joystick 
-		// If the joystick is pressed, then 
-		// override the elevator movement.
 		if (Math.abs(Robot.oi.getClimbSpeed()) > 0.1) {
-			Robot.climbSubsystem.setSpeed(Robot.oi.getClimbSpeed());
+			//check if upper limit reached
+			if(Robot.climbSubsystem.upperLimitReached() == false) {
+				//check if 80% of the way up, and slow down
+				if(Robot.climbSubsystem.getClimbEncoderCount() >= RobotConst.CLIMB_MAX_HEIGHT_COUNT*0.8) {
+					Robot.climbSubsystem.setSpeed(Robot.oi.getClimbSpeed()*0.3);
+				} else {
+					Robot.climbSubsystem.setSpeed(Robot.oi.getClimbSpeed());
+					}
+				
+			} else {
+				Robot.climbSubsystem.setSpeed(0);
+				}
 		}
 		else {
 			Robot.climbSubsystem.setSpeed(0);
-		}
-			
-		
-//		// Increment and decrement.
-//		if (Robot.oi.getElevatorUp()) {
-//			addHeight();
-//		}
-//
-//		if (Robot.oi.getElevatorDown()) {
-//			subtractHeight();
-//		}
-		
+			}	
 	}
 	
 	@Override

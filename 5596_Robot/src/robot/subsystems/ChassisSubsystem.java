@@ -36,7 +36,9 @@ public class ChassisSubsystem extends TGryoDriveSubsystem {
 								RobotConst.LEFT_MOTOR_ORIENTATION), 
 						new TPwmSpeedController(TPwmSpeedControllerType.SPARK, 
 								RobotMap.RIGHT_DRIVE_MOTOR_PWM_ADDRESS,
-								RobotConst.RIGHT_MOTOR_ORIENTATION));
+								RobotConst.RIGHT_MOTOR_ORIENTATION),
+						RobotConst.DRIVE_GYRO_PID_KP,
+						RobotConst.DRIVE_GYRO_PID_KI);
 
 				// Get the encoders attached to the CAN bus speed controller.
 				TEncoder leftEncoder  = new TDioEncoder(RobotMap.LEFT_ENCODER_DIO_PORT, RobotMap.LEFT_ENCODER_DIO_PORT+1);

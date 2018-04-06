@@ -43,18 +43,15 @@ import com.torontocodingcollective.oi.TTrigger;
  * 		Right Stick Press  	= 
  * 		Left Stick Press 	= 
  * 	Buttons:
- *      A Button            = Outtake Cube
- * 		X Button			= test button
+ *      A Button            = 
+ * 		X Button			= 
  * 	Bumpers/Triggers:
  * 		Left Trigger 		= Climb Speed Up (Manual Control)
  * 		Right Trigger		= Climb Speed down (Manual Control) 
- * 		Left Bumper			= 		
+ * 		Left Bumper			= Open intake		
  * 		Right Bumper		= 
  *	POV
- *		45					= Raise Right Ramp
- *		315					= Raise Left Ramp
- *		135					= Lower Right Ramp
- *		225					= Lower Left Ramp
+ *		
  *
  *
  */
@@ -71,14 +68,18 @@ public class OI {
 	private TToggle pidToggle = new TToggle(driverController, TStick.RIGHT);
 
 	private TButtonPressDetector elevatorUpButtonPress = 
-			new TButtonPressDetector(operatorController,TButton.LEFT_BUMPER);
+			new TButtonPressDetector(operatorController,TButton.Y);
 
 	private TButtonPressDetector elevatorDownButtonPress = 
-			new TButtonPressDetector(operatorController,TButton.RIGHT_BUMPER);
+			new TButtonPressDetector(operatorController,TButton.A);
 
 	//******************************************************
 	// Driver Controller
 	//******************************************************
+	public int getPov() {
+		return operatorController.getPOV();
+	}
+	
 	public double getLeftMotorSpeed() {
 		return - driverController.getAxis(TStick.LEFT, TAxis.Y);
 	}
@@ -98,22 +99,6 @@ public class OI {
 	public boolean reset() {
 		return driverController.getButton(TButton.START);
 	}
-	
-	public boolean getAutomaticIntake() {
-		return driverController.getButton(TButton.X);
-	}
-	
-	public boolean getAutomaticIntakeCancel() {
-		return driverController.getButton(TButton.B);
-	}
-	
-	public boolean getClawOpen() {
-		return driverController.getButton(TTrigger.LEFT); 
-	}
-
-	public int getPov() {
-		return driverController.getPOV();
-	}
 
 	public boolean getSpeedPidEnabled() {
 		return pidToggle.get();
@@ -123,36 +108,30 @@ public class OI {
 		pidToggle.set(state);
 	}
 
-	public boolean getIntakeCube() {
-		return driverController.getButton(TButton.RIGHT_BUMPER); 
-	}
-
-	public boolean getOuttakeCube() {
-		return driverController.getButton(TTrigger.RIGHT) || operatorController.getButton(TButton.A);
-	}
-
-
 	//******************************************************
 	// Operator Controller
 	//******************************************************
-
 	public boolean getTestRaiseElevator() {
 		return operatorController.getButton(TButton.X);
 	}
 	
+	//elevator
 	public double getElevatorSpeed() {
 		return - operatorController.getAxis(TStick.LEFT, TAxis.Y);
 	}
-
-	public double getIntakeTiltSpeed() {
-		return - operatorController.getAxis(TStick.RIGHT, TAxis.Y);
+	
+	public boolean getElevatorUp() {
+		return elevatorUpButtonPress.get();
 	}
 
+	public boolean getElevatorDown() {
+		return elevatorDownButtonPress.get();
+	}
+	
+	//climb
 	public double getClimbSpeed() {
-
 		double upSpeed = operatorController.getTrigger(TTrigger.LEFT);
 		double downSpeed = operatorController.getTrigger(TTrigger.RIGHT);
-		
 		if (upSpeed > 0.05) {
 			return upSpeed;
 		}
@@ -163,15 +142,42 @@ public class OI {
 		return 0;
 	}
 	
-	public boolean getElevatorUp() {
-		return elevatorUpButtonPress.get();
+	//intake
+	public double getIntakeTiltSpeed() {
+		return - operatorController.getAxis(TStick.RIGHT, TAxis.Y);
+	}
+	
+	public boolean getAutomaticIntake() {
+		return operatorController.getButton(TButton.X);
+	}
+	
+	public boolean getAutomaticIntakeCancel() {
+		return operatorController.getButton(TButton.B);
+	}
+	
+	public boolean getClawOpen() {
+		return operatorController.getButton(TButton.LEFT_BUMPER); 
+	}
+	
+	public boolean getIntakeCube() {
+		int povDirection = getPov();
+		if(povDirection == 0) {
+			return true;
+		} else {
+			return false;
+			}
 	}
 
-	public boolean getElevatorDown() {
-		return elevatorDownButtonPress.get();
+	public boolean getOuttakeCube() {
+		int povDirection = getPov();
+		if(povDirection == 180) {
+			return true;
+		} else {
+			return false;
+			}
 	}
 
-
+	
 	public boolean getTiltArmUp() {
 		return false; // TODO get a button
 	}
@@ -184,6 +190,4 @@ public class OI {
 		pidToggle.updatePeriodic();
 		driverRumble.updatePeriodic();
 	}
-
-
 }
