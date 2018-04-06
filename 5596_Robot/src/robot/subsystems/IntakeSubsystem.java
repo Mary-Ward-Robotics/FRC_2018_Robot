@@ -1,5 +1,6 @@
 package robot.subsystems;
 
+import com.torontocodingcollective.sensors.encoder.TDioEncoder;
 import com.torontocodingcollective.sensors.limitSwitch.TLimitSwitch;
 import com.torontocodingcollective.speedcontroller.TPwmSpeedController;
 import com.torontocodingcollective.speedcontroller.TPwmSpeedControllerType;
@@ -27,6 +28,10 @@ public class IntakeSubsystem extends TSubsystem {
 			new TPwmSpeedController(TPwmSpeedControllerType.SPARK,
 			RobotMap.INTAKE_TILT_MOTOR_PWM_ADDRESS, RobotConst.INTAKE_TILT_ORIENTATION);
 
+
+	TDioEncoder tiltEncoder =
+			new TDioEncoder(RobotMap.INTAKE_TILT_ENCODER_DIO_PORT,
+					RobotMap.INTAKE_TILT_ENCODER_DIO_PORT+1, true);
 //	private TEncoder intakeTiltEncoder = intakeTiltMotor.getEncoder();
 
 	// The intake clamp
@@ -96,6 +101,7 @@ public class IntakeSubsystem extends TSubsystem {
 	public void updatePeriodic() {
 		SmartDashboard.putBoolean("Intake Claw Open", intakeClaw.get() == Value.kForward);
 		SmartDashboard.putBoolean("Intake Cube Detected", isCubeDetected());
+		SmartDashboard.putNumber("Intake Tilt Encoder", tiltEncoder.get());
 	}
 
 }

@@ -193,17 +193,24 @@ public class AutonomousCommand extends CommandGroup {
 	//left side start
 
 	private void leftScaleLeft1(){
-		addParallel(new SetElevatorHeightCommand(1));
-		addSequential(new AccelerateDistanceCommand(190, 0, 1.0, 5.0, false));
-		addParallel(new SetElevatorHeightCommand(5));
-		addSequential(new ArcCommand(120, 0, 40, 0.4, true));
-		addSequential(new AutoCubeReleaseCommand());
-		addSequential(new BackupCommand(25));
-		addParallel(new SetElevatorHeightCommand(0));
-		addSequential(new RotateToAngleCommand(150, 0.5));
-		addParallel(new DriveDistanceCommand(54, 150, 0.5, 7.0, false));
-		addSequential(new AutoIntakeCommand());
+//		addParallel(new SetElevatorHeightCommand(1));
+//		addSequential(new AccelerateDistanceCommand(190, 0, 1.0, 5.0, false));
+//		addParallel(new SetElevatorHeightCommand(5));
+//		addSequential(new ArcCommand(120, 0, 40, 0.4, true));
+//		addSequential(new AutoCubeReleaseCommand());
+//		addSequential(new BackupCommand(25));
+//		addParallel(new SetElevatorHeightCommand(0));
+//		addSequential(new RotateToAngleCommand(150, 0.5));
+//		addParallel(new DriveDistanceCommand(54, 150, 0.5, 7.0, false));
+//		addSequential(new AutoIntakeCommand());
 
+		System.out.println("scale left");
+//		addSequential(new DriveDistanceCommand(170, 0, 0.6, 7.0, true));
+//		addSequential(new DriveDistanceCommand(20, 350, 0.4, 7.0, true));
+
+		addParallel(new SetElevatorHeightCommand(1660));
+//		addSequential(new DriveDistanceCommand(30, 350, 0.2, 7.0, true));
+		
 	}
 
 	private void leftScaleRight1(){

@@ -82,7 +82,7 @@ public class Robot extends IterativeRobot {
 		chassisSubsystem.enableSpeedPids();
 		
 		// Reset the gyro and the encoders
-//		Robot.chassisSubsystem.setGyroAngle(0);
+		Robot.chassisSubsystem.setGyroAngle(0);
 		Robot.chassisSubsystem.resetEncoders();
 				
 		// Initialize the robot command after initializing the game data
