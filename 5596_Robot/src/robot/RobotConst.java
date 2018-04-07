@@ -6,7 +6,6 @@ public class RobotConst {
 	// robots.
 	// Supported robots are 1311 and 1321.
 	public static int robot = 5596;
-
 	
 	public static final boolean INVERTED = true;
 	public static final boolean NOT_INVERTED = false;
@@ -34,6 +33,7 @@ public class RobotConst {
 	public static final boolean INTAKE_ROLLER_ORIENTATION;
 	public static final boolean INTAKE_TILT_ORIENTATION;
 	public static final double  INTAKE_TILT_UP_ENCODER_COUNT;
+	public static final double  INTAKE_TILT_HALF_ENCODER_COUNT;
 	public static final double  INTAKE_TILT_DOWN_ENCODER_COUNT;
 
 	public static final boolean ELEVATOR_MOTOR_ORIENTATION;
@@ -79,9 +79,10 @@ public class RobotConst {
 			
 			INTAKE_ROLLER_ORIENTATION = INVERTED;
 			INTAKE_TILT_ORIENTATION = INVERTED;
-			INTAKE_TILT_UP_ENCODER_COUNT = 126.5625; //TODO rough estimate, check value on TallBoi before running code!
-			INTAKE_TILT_DOWN_ENCODER_COUNT = 0; //Code should automatically set the min to 0 encoder counts
-
+			INTAKE_TILT_UP_ENCODER_COUNT = 0;
+			INTAKE_TILT_HALF_ENCODER_COUNT = -27;
+			INTAKE_TILT_DOWN_ENCODER_COUNT = -45; //Code should automatically set the min to 0 encoder counts
+			
 			ELEVATOR_MOTOR_ORIENTATION = INVERTED;
 			ELEVATOR_ENCODER_ORIENTATION = INVERTED;
 			ELEVATOR_ENCODER_COUNTS_PER_INCH = 186.67;
@@ -89,7 +90,7 @@ public class RobotConst {
 			ELEVATOR_SCALE_HEIGHT_COUNT = 1660;
 			ELEVATOR_SWITCH_HEIGHT_COUNT = 575;
 			
-			CLIMB_MOTOR_ORIENTATION = INVERTED;
+			CLIMB_MOTOR_ORIENTATION = NOT_INVERTED;
 			CLIMB_MAX_HEIGHT_COUNT = 1660; //TODO get actual max height
 			break;
 			
@@ -112,6 +113,7 @@ public class RobotConst {
 			INTAKE_ROLLER_ORIENTATION = INVERTED;
 			INTAKE_TILT_ORIENTATION = INVERTED;
 			INTAKE_TILT_UP_ENCODER_COUNT = 126.5625; //TODO rough estimate, check value on TallBoi before running code!
+			INTAKE_TILT_HALF_ENCODER_COUNT = 0;
 			INTAKE_TILT_DOWN_ENCODER_COUNT = 0; //Code should automatically set the min to 0 encoder counts
 
 			ELEVATOR_MOTOR_ORIENTATION = INVERTED;

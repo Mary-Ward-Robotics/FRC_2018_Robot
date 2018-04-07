@@ -15,22 +15,20 @@ public class DefaultClimbCommand extends Command {
 	protected void execute() {
 
 		if (Math.abs(Robot.oi.getClimbSpeed()) > 0.1) {
-			//check if upper limit reached
-			if(Robot.climbSubsystem.upperLimitReached() == false) {
-				//check if 80% of the way up, and slow down
-				if(Robot.climbSubsystem.getClimbEncoderCount() >= RobotConst.CLIMB_MAX_HEIGHT_COUNT*0.8) {
-					Robot.climbSubsystem.setSpeed(Robot.oi.getClimbSpeed()*0.3);
-				} else {
-					Robot.climbSubsystem.setSpeed(Robot.oi.getClimbSpeed());
-					}
-				
+			//check if 80% of the way up, and slow down
+			if(Robot.climbSubsystem.getClimbEncoderCount() >= RobotConst.CLIMB_MAX_HEIGHT_COUNT*0.8) {
+				Robot.climbSubsystem.setSpeed(Robot.oi.getClimbSpeed()*0.3);
 			} else {
-				Robot.climbSubsystem.setSpeed(0);
+				Robot.climbSubsystem.setSpeed(Robot.oi.getClimbSpeed());
 				}
-		}
-		else {
+			
+		} else {
 			Robot.climbSubsystem.setSpeed(0);
-			}	
+		}
+
+		if(Robot.oi.reset() == true) {
+			Robot.climbSubsystem.resetClimbEncoder();
+		}
 	}
 	
 	@Override

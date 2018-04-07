@@ -20,14 +20,14 @@ public class IntakeSubsystem extends TSubsystem {
 			RobotMap.CUBE_DETECT_DIO_PORT,
 			TLimitSwitch.DefaultState.OPEN);
 	
-	//Limit switches to detect if the tilt motor has reached it's limits
-	public TLimitSwitch upperLimitSwitch = new TLimitSwitch(
-			RobotMap.INTAKE_TILT_UP_LIMIT,
-			TLimitSwitch.DefaultState.OPEN);
-	
-	public TLimitSwitch lowerLimitSwitch = new TLimitSwitch(
-			RobotMap.INTAKE_TILT_DOWN_LIMIT,
-			TLimitSwitch.DefaultState.OPEN);
+//	//Limit switches to detect if the tilt motor has reached it's limits
+//	public TLimitSwitch upperLimitSwitch = new TLimitSwitch(
+//			RobotMap.INTAKE_TILT_UP_LIMIT,
+//			TLimitSwitch.DefaultState.OPEN);
+//	
+//	public TLimitSwitch lowerLimitSwitch = new TLimitSwitch(
+//			RobotMap.INTAKE_TILT_DOWN_LIMIT,
+//			TLimitSwitch.DefaultState.OPEN);
 
 	// Motor that moves the roller to suck in the cube
 	private TPwmSpeedController intakeRollerMotor = new TPwmSpeedController(
@@ -113,16 +113,16 @@ public class IntakeSubsystem extends TSubsystem {
 		tiltEncoder.reset();
 	}
 	
-	public boolean upperLimitReached() {
-		return upperLimitSwitch.atLimit();
-	}
-	
-	public boolean lowerLimitReached() {
-		return lowerLimitSwitch.atLimit();
-	}
+//	public boolean upperLimitReached() {
+//		return upperLimitSwitch.atLimit();
+//	}
+//	
+//	public boolean lowerLimitReached() {
+//		return lowerLimitSwitch.atLimit();
+//	}
 	
 	public boolean isCubeDetected() {
-		return cubeDetectedSwitch.atLimit();
+		return !cubeDetectedSwitch.atLimit();
 	}
 
 	// Periodically update the dashboard and any PIDs or sensors
@@ -131,6 +131,7 @@ public class IntakeSubsystem extends TSubsystem {
 		SmartDashboard.putBoolean("Intake Claw Open", intakeClaw.get() == Value.kForward);
 		SmartDashboard.putBoolean("Intake Cube Detected", isCubeDetected());
 		SmartDashboard.putNumber("Intake Tilt Encoder", tiltEncoder.get());
+		SmartDashboard.putBoolean("Cube Detected", isCubeDetected());
 	}
 
 }

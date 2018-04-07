@@ -19,11 +19,11 @@ public class ElevatorSubsystem extends TSubsystem {
 	//Limit switches for lift max/min
 	TLimitSwitch upperLimitSwitch = new TLimitSwitch(
 			RobotMap.ELEVATOR_UP_LIMIT,
-			TLimitSwitch.DefaultState.OPEN);
+			TLimitSwitch.DefaultState.CLOSED);
 	
 	TLimitSwitch lowerLimitSwitch = new TLimitSwitch(
 			RobotMap.ELEVATOR_DOWN_LIMIT,
-			TLimitSwitch.DefaultState.OPEN);
+			TLimitSwitch.DefaultState.CLOSED);
 	
 	//Elevator motor
 	TPwmSpeedController elevatorMotor = new TPwmSpeedController(
@@ -74,6 +74,8 @@ public class ElevatorSubsystem extends TSubsystem {
 		// TODO Auto-generated method stub
 		SmartDashboard.putNumber("Elevator Motor", elevatorMotor.get());
 		SmartDashboard.putNumber("Elevator Encoder", elevatorEncoder.get());
+		SmartDashboard.putBoolean("Upper limit", upperLimitReached());
+		SmartDashboard.putBoolean("Lower Limit", lowerLimitReached());
 	}
 
 }

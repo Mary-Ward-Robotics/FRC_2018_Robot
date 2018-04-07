@@ -24,10 +24,9 @@ public class DefaultIntakeCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.oi.getTestRaiseElevator()) {
-//			Scheduler.getInstance().add(new TimedIntakeTiltCommand(1.4 , -0.4));
+		if(Robot.oi.reset()) {
+			Robot.intakeSubsystem.resetTiltEncodercount();
 		}
-
 		
 		if (Robot.oi.getAutomaticIntake()) {
 			Scheduler.getInstance().add(new TeleopAutomaticIntakeCommand());
@@ -54,7 +53,7 @@ public class DefaultIntakeCommand extends Command {
 		}
 		
 		//intake tilt code
-		double intakeTiltSpeed = Robot.oi.getIntakeTiltSpeed();
+		double intakeTiltSpeed = Robot.oi.getIntakeTiltSpeed()*0.5;
 
 		if (Math.abs(intakeTiltSpeed) > 0.1) {
 			Robot.intakeSubsystem.setIntakeTiltSpeed(intakeTiltSpeed);
