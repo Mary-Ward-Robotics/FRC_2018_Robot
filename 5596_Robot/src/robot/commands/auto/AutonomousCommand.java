@@ -1,4 +1,4 @@
-package robot.commands;
+package robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import robot.RobotConst;
@@ -176,15 +176,16 @@ public class AutonomousCommand extends CommandGroup {
 	//left side start
 
 	private void leftScaleLeft1(){
-		addSequential(new SetIntakeTiltCommand(-27));
 		System.out.println("scale left");
 		System.out.println("driving forward");
 		addSequential(new DriveDistanceCommand(175, 0, 0.6, 7.0, false));
 		System.out.println("turning right and driving forward");
 		addSequential(new DriveDistanceCommand(20, 20, 0.4, 7.0, true));
 		System.out.println("driving forward and raising elevator");
-		addSequential(new SetElevatorHeightCommand(RobotConst.ELEVATOR_SCALE_HEIGHT_COUNT));
-		addSequential(new DriveDistanceCommand(40, 20, 0.4, 7.0, true));
+		addSequential(new AutoRaiseLiftCommandGroup(40));
+//		addParallel(new SetIntakeTiltCommand(-27));
+//		addParallel(new SetElevatorHeightCommand(RobotConst.ELEVATOR_SCALE_HEIGHT_COUNT));
+//		addSequential(new DriveDistanceCommand(40, 20, 0.4, 7.0, true));;
 		System.out.println("releasing cube");
 		addSequential(new AutoCubeReleaseCommand());
 	}
