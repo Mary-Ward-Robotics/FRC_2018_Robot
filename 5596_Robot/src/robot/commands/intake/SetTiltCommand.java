@@ -6,11 +6,12 @@ import robot.commands.drive.TSafeCommand;
 /**
  *
  */
-public class SetIntakeTiltCommand extends TSafeCommand {
+public class SetTiltCommand extends TSafeCommand {
 	double setpoint;
 	boolean angleDir = true;
 
-    public SetIntakeTiltCommand(double setpoint) {
+    public SetTiltCommand(double setpoint) {
+		super(4);
         requires(Robot.intakeSubsystem);
         this.setpoint = setpoint;
     }
@@ -21,7 +22,7 @@ public class SetIntakeTiltCommand extends TSafeCommand {
 		if(currentAngle < setpoint) {
 			Robot.intakeSubsystem.setIntakeTiltSpeed(0.5);
 		} else {
-			Robot.intakeSubsystem.setIntakeTiltSpeed(-0.3);
+			Robot.intakeSubsystem.setIntakeTiltSpeed(-0.5);
 			angleDir = false;
 		}
     }
@@ -54,6 +55,7 @@ public class SetIntakeTiltCommand extends TSafeCommand {
 
     // Called once after isFinished returns true
     protected void end() {
-		Robot.elevatorSubsystem.setSpeed(-0.05);
+		if(super.isTimedOut()) {System.out.println("Command timed out");}
+		Robot.intakeSubsystem.setIntakeTiltSpeed(-0.05);
     }
 }

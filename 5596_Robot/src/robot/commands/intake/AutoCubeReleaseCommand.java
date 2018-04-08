@@ -62,6 +62,8 @@ public class AutoCubeReleaseCommand extends TSafeCommand {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		if(super.isTimedOut()) {System.out.println("Command timed out");}
+		System.out.println("Cube released");
 		Robot.intakeSubsystem.intakeStop();
 	}
 

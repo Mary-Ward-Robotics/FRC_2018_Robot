@@ -29,14 +29,14 @@ public class DefaultElevatorCommand extends Command {
 		if (Math.abs(Robot.oi.getElevatorSpeed()) > 0.1) {
 			double liftCount = Robot.elevatorSubsystem.getEncoderCount();
 			
-			double elevatorSpeed = Robot.oi.getElevatorSpeed()*0.7;
+			double elevatorSpeed = Robot.oi.getElevatorSpeed()*0.8;
 				// If the elevator is moving down, then go slowly - limit the down speed to 0.33
 			if (elevatorSpeed < 0) {
 				//if elevator is 20% of the way down, slow down
 				if(liftCount <= RobotConst.ELEVATOR_MAX_HEIGHT_COUNT*0.2) {
-					elevatorSpeed *= 0.5;
+					elevatorSpeed *= 0.8;
 					} else {
-				elevatorSpeed *= 0.4;
+				elevatorSpeed *= 0.7;
 				}
 			}
 				

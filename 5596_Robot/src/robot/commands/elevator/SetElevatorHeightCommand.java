@@ -18,9 +18,9 @@ public class SetElevatorHeightCommand extends TSafeCommand {
 		
 		double currentHeight = Robot.elevatorSubsystem.getEncoderCount();
 		if(currentHeight < encoderHeight) {
-			Robot.elevatorSubsystem.setSpeed(0.5);
+			Robot.elevatorSubsystem.setSpeed(0.9);
 		} else {
-			Robot.elevatorSubsystem.setSpeed(-0.3);
+			Robot.elevatorSubsystem.setSpeed(-0.5);
 			lift = false;
 		}
 	}
@@ -50,6 +50,8 @@ public class SetElevatorHeightCommand extends TSafeCommand {
 	}
 	
 	protected void end() {
+		if(super.isTimedOut()) {System.out.println("Command timed out");}
+		
 		Robot.elevatorSubsystem.setSpeed(0);
 	}
 }

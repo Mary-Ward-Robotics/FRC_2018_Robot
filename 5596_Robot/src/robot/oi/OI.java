@@ -130,8 +130,8 @@ public class OI {
 	
 	//climb
 	public double getClimbSpeed() {
-		double upSpeed = operatorController.getTrigger(TTrigger.LEFT);
-		double downSpeed = operatorController.getTrigger(TTrigger.RIGHT);
+		double upSpeed = operatorController.getTrigger(TTrigger.RIGHT);
+		double downSpeed = operatorController.getTrigger(TTrigger.LEFT);
 		if (upSpeed > 0.05) {
 			return upSpeed;
 		}
@@ -161,7 +161,7 @@ public class OI {
 	
 	public boolean getIntakeCube() {
 		int povDirection = getPov();
-		if(povDirection == 0) {
+		if(povDirection == 180) {
 			return true;
 		} else {
 			return false;
@@ -170,7 +170,7 @@ public class OI {
 
 	public boolean getOuttakeCube() {
 		int povDirection = getPov();
-		if(povDirection == 180) {
+		if(povDirection == 0) {
 			return true;
 		} else {
 			return false;

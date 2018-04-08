@@ -3,19 +3,19 @@ package robot.commands.drive;
 import robot.Robot;
 import robot.RobotConst;
 
-public class DriveDistanceCommand extends DriveDirectionCommand {
+public class ReverseDriveCommand extends DriveDirectionCommand {
 	boolean brake;
 	double distance = 0; // in inches 
 	double stopDistanceEncoderCounts = 0; // encoder counts to stop at
 
 	private final double STOPPING_ENCODER_COUNTS = 20; // to reduce stopping overshoot
 	
-	public DriveDistanceCommand(double distance, double direction, double speed, 
+	public ReverseDriveCommand(double distance, double direction, double speed, 
 			double timeout, boolean brakeWhenFinished) {
 		
 		super(direction, speed, timeout, brakeWhenFinished);
 		
-		this.distance = distance;
+		this.distance = -distance;
 		this.stopDistanceEncoderCounts = 
 				distance * RobotConst.DRIVE_ENCODER_COUNTS_PER_INCH - STOPPING_ENCODER_COUNTS;
 		System.out.println(stopDistanceEncoderCounts);
@@ -24,20 +24,22 @@ public class DriveDistanceCommand extends DriveDirectionCommand {
 	
 	protected void initialize() {
 		super.initialize();
-		//System.out.println("starting drive");
+		System.out.println("starting drive");
 		Robot.chassisSubsystem.resetEncoders();
 	}
 	
 	protected boolean isFinished() {
-
+		
 		if (super.isFinished()) {
 			return true;
 		}
-	
-		if (Robot.chassisSubsystem.getEncoderDistance() > stopDistanceEncoderCounts) {
+		
+		if (Robot.chassisSubsystem.getEncoderDistance() < stopDistanceEncoderCounts) {
 			System.out.println("ending drive");
 			return true;
 		}
+		
+		if(super.isTimedOut()) {System.out.println("Command timed out");}
 		
 		return false;
 	}
@@ -46,7 +48,5 @@ public class DriveDistanceCommand extends DriveDirectionCommand {
 		if(brake == true) {
 			Robot.chassisSubsystem.setSpeed(0, 0);
 		}
-
-		if(super.isTimedOut()) {System.out.println("Command timed out");}
 	}
 }
