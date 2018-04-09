@@ -79,6 +79,10 @@ public class IntakeSubsystem extends TSubsystem {
 		intakeRollerMotor.set(-1.0);
 	}
 	
+	public void setSpeedCube(double speed) {
+		intakeRollerMotor.set(speed);
+	}
+	
 	public void intakeStop() {
 		intakeRollerMotor.stopMotor();
 	}

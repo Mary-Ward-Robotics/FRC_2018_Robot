@@ -29,7 +29,7 @@ public class AutoCubeReleaseCommand extends TSafeCommand {
 		
 		switch (curStep) {
 		case OUTTAKE:
-			Robot.intakeSubsystem.outtakeCube();
+			Robot.intakeSubsystem.setSpeedCube(-0.8);;
 			if (timeSinceInitialized() > .25) {
 				curStep = Step.OPEN;
 			}

@@ -199,7 +199,7 @@ public class AutonomousCommand extends CommandGroup {
 		addSequential(new DriveDistanceCommand(50, 90, 0.6, 6, false));
 		
 		System.out.println("Driving forward");
-		addSequential(new DriveDistanceCommand(140, 90, 0.6, 4, false));
+		addSequential(new DriveDistanceCommand(140, 90, 0.5, 4, false));
 		
 		System.out.println("Turning to scale");
 		addSequential(new RotateToAngleCommand(310,0.6,6));
@@ -216,9 +216,12 @@ public class AutonomousCommand extends CommandGroup {
 		System.out.println("Releasing cube");
 		addSequential(new AutoCubeReleaseCommand());
 		
+		System.out.println("turning 180");
+		addSequential(new DriveDirectionCommand(180, -0.5, 1, true));
+		
 		System.out.println("Reversing");
-		addParallel(new SetElevatorHeightCommand(0));
-		addSequential(new ReverseDriveCommand(20, 310, 0.5, 7.0, true));
+		addParallel(new SetTiltCommand(-5));
+		addSequential(new SetElevatorHeightCommand(0));
 
 		System.out.println("Scale 1 complete");
 		System.out.println("----------------------------------------");
