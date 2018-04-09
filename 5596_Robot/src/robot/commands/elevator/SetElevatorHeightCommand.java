@@ -2,7 +2,6 @@ package robot.commands.elevator;
 
 import robot.Robot;
 import robot.commands.drive.TSafeCommand;
-import robot.subsystems.ElevatorSubsystem;
 
 public class SetElevatorHeightCommand extends TSafeCommand {
 	
@@ -19,9 +18,9 @@ public class SetElevatorHeightCommand extends TSafeCommand {
 		
 		double currentHeight = Robot.elevatorSubsystem.getEncoderCount();
 		if(currentHeight < encoderHeight) {
-			Robot.elevatorSubsystem.setSpeed(0.7);
+			Robot.elevatorSubsystem.setSpeed(0.9);
 		} else {
-			Robot.elevatorSubsystem.setSpeed(-0.3);
+			Robot.elevatorSubsystem.setSpeed(-0.5);
 			lift = false;
 		}
 	}
@@ -47,11 +46,12 @@ public class SetElevatorHeightCommand extends TSafeCommand {
 				return true;
 			}
 		}
-		
 		return false;
 	}
 	
 	protected void end() {
+		if(super.isTimedOut()) {System.out.println("Command timed out");}
+		
 		Robot.elevatorSubsystem.setSpeed(0);
 	}
 }

@@ -27,7 +27,7 @@ public class RotateToAngleCommand extends TSafeCommand {
 
 		System.out.println("Initializing rotate to angle " + endDirection);
 		
-		this.startDirection = 0; //Robot.chassisSubsystem.getGryoAngle();
+		Robot.chassisSubsystem.getGryoAngle();
 		this.turnangle = (this.endDirection - this.startDirection);
 
 		if (this.turnangle > 180) {
@@ -60,6 +60,7 @@ public class RotateToAngleCommand extends TSafeCommand {
 	
 	protected void end(){
 		Robot.chassisSubsystem.setSpeed(0,0);
+		if(super.isTimedOut()) {System.out.println("Command timed out");}
 	}
 	
 	protected boolean isFinished() {
@@ -89,5 +90,4 @@ public class RotateToAngleCommand extends TSafeCommand {
 		System.out.println(error);
 		return false;
 	}
-
 }

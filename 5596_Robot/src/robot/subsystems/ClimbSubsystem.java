@@ -12,10 +12,6 @@ import robot.RobotMap;
 import robot.commands.climb.DefaultClimbCommand;
 
 public class ClimbSubsystem extends TSubsystem {
-	
-	TLimitSwitch upperLimitSwitch = new TLimitSwitch(
-			RobotMap.CLIMB_UP_LIMIT,
-			TLimitSwitch.DefaultState.OPEN);
 
 	TPwmSpeedController climbMotor = new TPwmSpeedController(
 			TPwmSpeedControllerType.SPARK, 
@@ -35,8 +31,8 @@ public class ClimbSubsystem extends TSubsystem {
 		return climbEncoder.get();
 	}
 	
-	public boolean upperLimitReached() {
-		return upperLimitSwitch.atLimit();
+	public void resetClimbEncoder() {
+		climbEncoder.reset();
 	}
 
 	@Override

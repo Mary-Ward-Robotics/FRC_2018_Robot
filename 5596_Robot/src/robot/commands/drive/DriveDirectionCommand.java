@@ -78,11 +78,13 @@ public class DriveDirectionCommand extends TSafeCommand {
     	if (brakeWhenFinished) {
     		Robot.chassisSubsystem.setSpeed(0, 0);
     	}
+
+		if(super.isTimedOut()) {System.out.println("Command timed out");}
     	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
-    protected void interrupted() {
+    public void interrupted() {
     }
 }

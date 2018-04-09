@@ -29,7 +29,7 @@ public class AutoCubeReleaseCommand extends TSafeCommand {
 		
 		switch (curStep) {
 		case OUTTAKE:
-			Robot.intakeSubsystem.outtakeCube();
+			Robot.intakeSubsystem.setSpeedCube(-0.8);;
 			if (timeSinceInitialized() > .25) {
 				curStep = Step.OPEN;
 			}
@@ -62,6 +62,8 @@ public class AutoCubeReleaseCommand extends TSafeCommand {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		if(super.isTimedOut()) {System.out.println("Command timed out");}
+		System.out.println("Cube released");
 		Robot.intakeSubsystem.intakeStop();
 	}
 

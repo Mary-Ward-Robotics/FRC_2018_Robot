@@ -1,4 +1,4 @@
-package robot.commands;
+package robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import robot.RobotConst;
@@ -57,16 +57,6 @@ public class AutonomousCommand extends CommandGroup {
 			firstAction = CROSS;
 			System.out.println("Switch is not on our side. Overriding first action to CROSS");
 		}
-		
-		//TODO Uncomment me if we don't want to always rush SCALE
-//		if (robotStartPosition.equals(ROBOT_RIGHT) && firstAction.equals(SCALE) && scale == LEFT) {
-//			firstAction = SWITCH;
-//			System.out.println("Scale is not on our side.  Overriding first action to SWTICH");
-//		}
-//		if (robotStartPosition.equals(ROBOT_LEFT) && firstAction.equals(SCALE) && scale == RIGHT){
-//			firstAction = SWITCH;
-//			System.out.println("Scale is not on our side. Overriding first action to SWITCH");
-//		}
 
 		//run the auto
 
@@ -101,6 +91,8 @@ public class AutonomousCommand extends CommandGroup {
 			if (closeSwitch == LEFT){
 				if (scale == LEFT) {
 					leftSwitchLeft2();
+				} else {
+					leftSwitchRight2();
 				}
 			}
 		}
@@ -177,57 +169,77 @@ public class AutonomousCommand extends CommandGroup {
 
 	private void leftScaleLeft1(){
 		System.out.println("scale left");
-		addSequential(new DriveDistanceCommand(170, 0, 0.6, 7.0, true));
+		System.out.println("driving forward");
+		addSequential(new DriveDistanceCommand(175, 0, 0.6, 7.0, false));
+		
 		System.out.println("turning right and driving forward");
-		addSequential(new DriveDistanceCommand(20, 10, 0.4, 7.0, true));
+		addSequential(new DriveDistanceCommand(20, 20, 0.4, 7.0, true));
+		
 		System.out.println("driving forward and raising elevator");
-		addParallel(new SetElevatorHeightCommand(RobotConst.ELEVATOR_SCALE_HEIGHT_COUNT));
-		addSequential(new DriveDistanceCommand(30, 10, 0.2, 7.0, true));
+		addParallel(new SetTiltCommand(-27));
+		addSequential(new SetElevatorHeightCommand(RobotConst.ELEVATOR_SCALE_HEIGHT_COUNT));
+		addSequential(new DriveDistanceCommand(40, 20, 0.4, 7.0, true));
+		
 		System.out.println("releasing cube");
 		addSequential(new AutoCubeReleaseCommand());
+		
+		System.out.println("Lowering arm");
+		addParallel(new SetElevatorHeightCommand(0));
+		addSequential(new ReverseDriveCommand(40, 20 , 0.4, 7, true));
+		
+		System.out.println("Scale 1 complete");
+		System.out.println("----------------------------------------");
 	}
 	private void leftScaleRight1(){
-		crossLine(); //TODO Fix my auto!
+		System.out.println("scale right");
+		System.out.println("driving forward");
+		addSequential(new DriveDistanceCommand(185,0,0.6,6,false));
+		
+		System.out.println("Turning right");
+		addSequential(new DriveDistanceCommand(50, 90, 0.6, 6, false));
+		
+		System.out.println("Driving forward");
+		addSequential(new DriveDistanceCommand(140, 90, 0.5, 4, false));
+		
+		System.out.println("Turning to scale");
+		addSequential(new RotateToAngleCommand(310,0.6,6));
+		
+		System.out.println("Drive forward to scale");
+		addParallel(new SetTiltCommand(RobotConst.INTAKE_TILT_HALF_ENCODER_COUNT));
+		addSequential(new DriveDistanceCommand(40,310,0.6,7.0,true));
+		
+		System.out.println("Driving forward and raising elevator");
+		addParallel(new SetTiltCommand(RobotConst.INTAKE_TILT_HALF_ENCODER_COUNT));
+		addSequential(new SetElevatorHeightCommand(RobotConst.ELEVATOR_SCALE_HEIGHT_COUNT));
+		addSequential(new DriveDistanceCommand(20, 310, 0.4, 7.0, true));
+		
+		System.out.println("Releasing cube");
+		addSequential(new AutoCubeReleaseCommand());
+		
+		System.out.println("turning 180");
+		addSequential(new DriveDirectionCommand(180, -0.5, 1, true));
+		
+		System.out.println("Reversing");
+		addParallel(new SetTiltCommand(-5));
+		addSequential(new SetElevatorHeightCommand(0));
+
+		System.out.println("Scale 1 complete");
+		System.out.println("----------------------------------------");
 	}
 
 	//right side start
 	private void rightScaleLeft1(){	
-		crossLine(); //TODO Fix my auto!
+		crossLine();
 	}
-	private void rightScaleRight1(){	
-		System.out.println("scale right");
-		addParallel(new IntakeTiltReset());
-		addSequential(new DriveDistanceCommand(170, 0, 0.6, 7.0, true));
-		System.out.println("turning left and driving forward");
-		addSequential(new DriveDistanceCommand(20, 350, 0.4, 7.0, true));
-		System.out.println("driving forward and raising elevator");
-		addParallel(new SetElevatorHeightCommand(RobotConst.ELEVATOR_SCALE_HEIGHT_COUNT));
-		addSequential(new DriveDistanceCommand(30, 350, 0.2, 7.0, true));
-		System.out.println("releasing cube");
-		addSequential(new AutoCubeReleaseCommand());
+	private void rightScaleRight1(){
+		crossLine();
 	}
-	
 	//center start
 	private void centerSwitchLeft1() {
-//		addParallel(new SetElevatorHeightCommand(2));
-//		addParallel(new TimedRaiseElevatorCommand(1.2, 0.7));
-//		addSequential(new ArcCommand(85, 0, 310, 0.6, false));
-//		addParallel(new TimedIntakeTiltCommand(1.4, -0.4));
-//		addSequential(new ArcCommand(105, 310, 0, 0.6, false));
-//		addSequential(new DriveDistanceCommand(20, 0, 0.8, 7.0, false));
-//		addSequential(new AutoCubeReleaseCommand());
-		crossLine(); //TODO Fix my auto!
+		crossLine();
 	}
 	private void centerSwitchRight1(){
-//		addParallel(new SetElevatorHeightCommand(2));
-//		addParallel(new TimedRaiseElevatorCommand(1.2, 0.8));
-//		addSequential(new ArcCommand(80, 0, 45,0.8, false));
-//		addSequential(new DriveDistanceCommand(3, 45, 0.8, 3.0, false));
-//		addParallel(new TimedIntakeTiltCommand(1.4, -0.4));
-//		addSequential(new ArcCommand(110, 45, 0, 0.8, false));
-//		addSequential(new DriveDistanceCommand(20, 0, 0.8, 7.0, false));
-//		addSequential(new AutoCubeReleaseCommand());
-		crossLine(); //TODO Fix my auto!
+		crossLine();
 	}
 
 	//universal
@@ -244,9 +256,10 @@ public class AutonomousCommand extends CommandGroup {
 	// * = mandatory name parameter
 
 	//left side
-	public void leftSwitchRight2(){
+	public void leftSwitchRight2() {
 	}
 	public void leftSwitchLeft2(){
+		//TODO Two Box Auto
 	}
 	public void leftScaleRight2(){
 	}

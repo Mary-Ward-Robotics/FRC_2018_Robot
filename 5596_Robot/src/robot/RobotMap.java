@@ -36,12 +36,12 @@ public class RobotMap {
 	public static int CLIMB_ENCODER_DIO_PORT            = 4;
 	public static int INTAKE_TILT_ENCODER_DIO_PORT      = 8;
 
-	public static int CLIMB_UP_LIMIT                    = 10;
-	public static int ELEVATOR_UP_LIMIT                 = 11;
-	public static int ELEVATOR_DOWN_LIMIT               = 12;
-	public static int INTAKE_TILT_UP_LIMIT              = 13;
-	public static int INTAKE_TILT_DOWN_LIMIT            = 14;
-	public static int CUBE_DETECT_DIO_PORT              = 15; 
+//	public static int CLIMB_UP_LIMIT                    = 10;
+	public static int ELEVATOR_UP_LIMIT                 = 12;
+	public static int ELEVATOR_DOWN_LIMIT               = 11;
+//	public static int INTAKE_TILT_UP_LIMIT              = 13;
+//	public static int INTAKE_TILT_DOWN_LIMIT            = 14;
+	public static int CUBE_DETECT_DIO_PORT              = 10; 
 	
 	//******************************************
 	// Analog Ports

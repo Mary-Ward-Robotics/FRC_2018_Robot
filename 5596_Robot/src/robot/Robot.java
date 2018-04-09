@@ -4,7 +4,7 @@ package robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import robot.commands.AutonomousCommand;
+import robot.commands.auto.AutonomousCommand;
 import robot.oi.GameData;
 import robot.oi.OI;
 import robot.subsystems.ChassisSubsystem;

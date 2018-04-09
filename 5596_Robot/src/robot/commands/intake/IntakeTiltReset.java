@@ -9,7 +9,7 @@ import robot.commands.drive.TSafeCommand;
 public class IntakeTiltReset extends TSafeCommand {
 
     public IntakeTiltReset() {
-    	super(4);
+    	super(3);
         requires(Robot.intakeSubsystem);
     }
 
@@ -19,18 +19,20 @@ public class IntakeTiltReset extends TSafeCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.intakeSubsystem.lowerLimitReached()) {
-    		Robot.intakeSubsystem.resetTiltEncodercount();
-    	}
+//    	if(Robot.intakeSubsystem.lowerLimitReached()) {
+//    		Robot.intakeSubsystem.resetTiltEncodercount();
+//    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Robot.intakeSubsystem.lowerLimitReached();
+//    	return Robot.intakeSubsystem.lowerLimitReached();
+    	return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("Finished Reset");
     	Robot.intakeSubsystem.setIntakeTiltSpeed(0);
     }
 
