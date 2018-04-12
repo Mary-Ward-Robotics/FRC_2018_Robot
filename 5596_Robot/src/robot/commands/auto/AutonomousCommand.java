@@ -185,7 +185,6 @@ public class AutonomousCommand extends CommandGroup {
 		
 		System.out.println("Lowering arm");
 		addParallel(new SetElevatorHeightCommand(0));
-		addSequential(new ReverseDriveCommand(40, 20 , 0.4, 7, true));
 		
 		System.out.println("Scale 1 complete");
 		System.out.println("----------------------------------------");
