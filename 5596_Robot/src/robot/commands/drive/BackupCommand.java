@@ -16,7 +16,7 @@ public class BackupCommand extends TSafeCommand {
 	protected void initialize() {
 		super.initialize();
 		Robot.chassisSubsystem.resetEncoders();
-		Robot.chassisSubsystem.setSpeed(-.25, -.25);
+		Robot.chassisSubsystem.setSpeed(-.4, -.4);
 	}
 	
 	protected boolean isFinished() {

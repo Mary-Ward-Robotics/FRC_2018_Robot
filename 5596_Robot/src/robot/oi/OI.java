@@ -97,7 +97,8 @@ public class OI {
 	}
 
 	public boolean reset() {
-		return driverController.getButton(TButton.START);
+//		return driverController.getButton(TButton.START);
+		return false;
 	}
 
 	public boolean getSpeedPidEnabled() {
@@ -161,7 +162,7 @@ public class OI {
 	
 	public boolean getIntakeCube() {
 		int povDirection = getPov();
-		if(povDirection == 180) {
+		if(povDirection == 180 || povDirection == 225 || povDirection ==135) {
 			return true;
 		} else {
 			return false;
@@ -170,20 +171,28 @@ public class OI {
 
 	public boolean getOuttakeCube() {
 		int povDirection = getPov();
-		if(povDirection == 0) {
+		if(povDirection == 0 || povDirection == 315 || povDirection == 45) {
 			return true;
 		} else {
 			return false;
 			}
 	}
+	
+	public boolean getAutoScale() {
+		return operatorController.getButton(TButton.Y);
+	}
+	
+	public boolean getAutoLiftReset() {
+		return operatorController.getButton(TButton.A);
+	}
 
 	
 	public boolean getTiltArmUp() {
-		return false; // TODO get a button
+		return false;
 	}
 
 	public boolean getTiltArmDown() {
-		return false; //TODO: get a button
+		return false;
 	}
 
 	public void updatePeriodic() {

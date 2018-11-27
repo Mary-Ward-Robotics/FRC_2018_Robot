@@ -16,8 +16,8 @@ public class DefaultClimbCommand extends Command {
 
 		if (Math.abs(Robot.oi.getClimbSpeed()) > 0.1) {
 			//check if 80% of the way up, and slow down
-			if(Robot.climbSubsystem.getClimbEncoderCount() >= RobotConst.CLIMB_MAX_HEIGHT_COUNT*0.8) {
-				Robot.climbSubsystem.setSpeed(Robot.oi.getClimbSpeed()*0.3);
+			if(Robot.climbSubsystem.getClimbEncoderCount() <= -753) {
+				Robot.climbSubsystem.setSpeed(Robot.oi.getClimbSpeed()*0.1);
 			} else {
 				Robot.climbSubsystem.setSpeed(Robot.oi.getClimbSpeed());
 				}

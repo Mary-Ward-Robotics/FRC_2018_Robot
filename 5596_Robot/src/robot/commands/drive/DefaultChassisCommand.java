@@ -43,10 +43,6 @@ public class DefaultChassisCommand extends Command {
 			Robot.chassisSubsystem.disableSpeedPids();
 		}
 
-		if (Robot.oi.getPov() != -1) {
-			Scheduler.getInstance().add(new RotateToAngleCommand(Robot.oi.getPov(), 0.5));
-		}
-
 
 		// Tank drive uses the speeds directly
 		double leftSpeed  = scaleValue(Robot.oi.getLeftMotorSpeed());		
